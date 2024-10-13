@@ -1,0 +1,394 @@
+<div class="container">
+  <h2>نموذج الطلب</h2>
+
+  <!-- بيانات المستخدم -->
+  <form form id="mainForm" [formGroup]="myform" (ngSubmit)="send_data()">
+    <div class="form-section">
+      <h4>البيانات الشخصية</h4>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="fullName">الاسم الكامل:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="fullName"
+              formControlName="parent_fullname"
+              placeholder="أدخل الاسم الكامل"
+              required
+            />
+          </div>
+          @if (this.myform.controls['parent_fullname'].value!=''
+          &&this.myform.controls['parent_fullname'].value!=null) {
+          @if(this.myform.controls['parent_fullname'].value.length <3){
+          <div class="text-danger m-2">يجب أن يكون اسم على الأقل 3 أحرف.</div>
+          }} @if (this.myform.controls['parent_fullname'].value!=''
+          &&this.myform.controls['parent_fullname'].value!=null) {
+          @if(this.myform.controls["parent_fullname"].value.length > 100){
+          <div class="text-danger">يجب ألا يزيد اسم عن 100 حرفًا.</div>
+          }}
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="userName">اسم المستخدم:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="userName"
+              formControlName="parent_username"
+              placeholder="أدخل اسم المستخدم"
+              required
+            />
+          </div>
+          @if (this.myform.controls['parent_username'].value != '' &&
+          this.myform.controls['parent_username'].value != null) { @if
+          (this.myform.controls['parent_username'].errors?.['minlength']) {
+          <div class="text-danger m-2">
+            يجب أن يكون اسم المستخدم على الأقل 3 أحرف أو أرقام فقط.
+          </div>
+          } @if (this.myform.controls['parent_username'].errors?.['maxlength'])
+          {
+          <div class="text-danger m-2">
+            يجب ألا يزيد اسم المستخدم عن 20 حرفًا.
+          </div>
+          } @if (this.myform.controls['parent_username'].errors?.['pattern']) {
+          <div class="text-danger m-2">
+            يجب أن يحتوي اسم المستخدم على أحرف وأرقام فقط بدون رموز.
+          </div>
+          } }
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="email">البريد الإلكتروني:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="parent_email"
+              placeholder="أدخل البريد الإلكتروني"
+              required
+            />
+          </div>
+          @if (this.myform.controls['parent_email'].value!=''
+          &&this.myform.controls['parent_email'].value!=null) {
+          @if(this.myform.controls['parent_email'].invalid){
+          <div class="text-danger m-2">يرجى إدخال عنوان بريد إلكتروني صالح</div>
+          }}
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="phone">رقم الهاتف:</label>
+            <input
+              type="tel"
+              class="form-control"
+              id="phone"
+              formControlName="parent_phone"
+              placeholder="أدخل رقم الهاتف"
+              required
+            />
+          </div>
+          @if (this.myform.controls['parent_phone'].value!=''
+          &&this.myform.controls['parent_phone'].value!=null) {
+          @if(this.myform.controls['parent_phone'].invalid){
+          <div class="text-danger m-2">
+            من فضلك ادخل رقم تلفون متبعوعا بكود دولتك
+          </div>
+          }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="password">كلمة المرور:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="parent_password"
+              placeholder="أدخل كلمة المرور"
+              required
+            />
+          </div>
+          @if (this.myform.controls['parent_password'].value!=''
+          &&this.myform.controls['parent_password'].value!=null) {
+          @if(this.myform.controls['parent_password'].invalid){
+          <div class="text-danger m-2"></div>
+          يجب أن تكون كلمة المرور 6 أحرف على الأقل، تحتوي على حرف كبير، رمز،
+          ورقم واحد على الأقل. }}
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="confirmPassword">تأكيد كلمة المرور:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              formControlName="parent_confirm_password"
+              placeholder="أعد إدخال كلمة المرور"
+              required
+            />
+          </div>
+          @if (this.myform.controls['parent_confirm_password'].value!=''
+          &&this.myform.controls['parent_confirm_password'].value!=null) {
+          @if(myform.controls["parent_confirm_password"].value!==
+          myform.controls["parent_password"].value){
+          <div class="text-danger m-2">كلمات المرور غير متطابقة.</div>
+          }}
+        </div>
+      </div>
+    </div>
+
+    <!-- إضافة الطالب -->
+    <div id="studentsContainer">
+      <div class="form-section student-form">
+        <h4>إضافة طالب</h4>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group mb-3">
+              <label for="studentFullName">الاسم الكامل للطالب:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="studentFullName"
+                formControlName="student_fullname"
+                placeholder="أدخل الاسم الكامل للطالب"
+                required
+              />
+            </div>
+            @if (this.myform.controls['student_fullname'].value!=''
+            &&this.myform.controls['student_fullname'].value!=null) {
+            @if(this.myform.controls['student_fullname'].value.length <3){
+            <div class="text-danger m-2">يجب أن يكون اسم على الأقل 3 أحرف.</div>
+            }} @if (this.myform.controls['student_fullname'].value!=''
+            &&this.myform.controls['student_fullname'].value!=null) {
+            @if(myform.controls["student_fullname"].value.length > 100){
+            <div class="text-danger">يجب ألا يزيد اسم عن 100 حرفًا.</div>
+            }}
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group mb-3">
+              <label for="studentName">اسم المستخدم :</label>
+              <input
+                type="text"
+                class="form-control"
+                id="studentName"
+                formControlName="student_username"
+                placeholder="أدخل اسم الطالب"
+                required
+              />
+            </div>
+
+            @if (this.myform.controls['student_username'].value != '' &&
+            this.myform.controls['student_username'].value != null) { @if
+            (this.myform.controls['student_username'].errors?.['minlength']) {
+            <div class="text-danger m-2">
+              يجب أن يكون اسم المستخدم على الأقل 3 أحرف أو أرقام فقط.
+            </div>
+            } @if
+            (this.myform.controls['student_username'].errors?.['maxlength']) {
+            <div class="text-danger m-2">
+              يجب ألا يزيد اسم المستخدم عن 20 حرفًا.
+            </div>
+            } @if (this.myform.controls['student_username'].errors?.['pattern'])
+            {
+            <div class="text-danger m-2">
+              يجب أن يحتوي اسم المستخدم على أحرف وأرقام فقط بدون رموز.
+            </div>
+            } }
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group mb-3">
+              <label for="studentEmail">البريد الإلكتروني للطالب:</label>
+              <input
+                type="email"
+                class="form-control"
+                id="studentEmail"
+                formControlName="student_email"
+                placeholder="أدخل بريد الطالب"
+                required
+              />
+            </div>
+
+            @if (this.myform.controls['student_email'].value != '' &&
+            this.myform.controls['student_email'].value != null) { @if
+            (this.myform.controls['student_email'].errors?.['email']) {
+            <div class="text-danger m-2">
+              يرجى إدخال عنوان بريد إلكتروني صالح.
+            </div>
+            } }
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group mb-3">
+              <label for="studentPhone">رقم هاتف الطالب:</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="studentPhone"
+                formControlName="student_phone"
+                placeholder="أدخل رقم هاتف الطالب"
+                required
+              />
+            </div>
+            @if (this.myform.controls['student_phone'].value!=''
+            &&this.myform.controls['student_phone'].value!=null) {
+            @if(this.myform.controls['student_phone'].invalid){
+            <div class="text-danger m-2">
+              من فضلك ادخل رقم تلفون متبعوعا بكود دولتك
+            </div>
+            }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group mb-3">
+              <label for="studentPassword">كلمة مرور الطالب:</label>
+              <input
+                type="password"
+                class="form-control"
+                id="studentPassword"
+                formControlName="student_password"
+                placeholder="أدخل كلمة مرور الطالب"
+                required
+              />
+            </div>
+            @if (this.myform.controls['student_password'].value!=''
+            &&this.myform.controls['student_password'].value!=null) {
+            @if(this.myform.controls['student_password'].invalid){
+            <div class="text-danger m-2">
+              يجب أن تكون كلمة المرور 6 أحرف على الأقل، تحتوي على حرف كبير، رمز،
+              ورقم واحد على الأقل.
+            </div>
+            }}
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group mb-3">
+              <label for="confirmStudentPassword"
+                >تأكيد كلمة مرور الطالب:</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="confirmStudentPassword"
+                formControlName="student_confirm_password"
+                placeholder="أعد إدخال كلمة مرور الطالب"
+                required
+              />
+            </div>
+            @if (this.myform.controls['student_confirm_password'].value!=''
+            &&this.myform.controls['student_confirm_password'].value!=null) {
+            @if(myform.controls["student_confirm_password"].value!==
+            myform.controls["student_password"].value){
+            <div class="text-danger m-2">كلمات المرور غير متطابقة.</div>
+            }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group mb-3">
+              <label for="enrollmentDate">تاريخ ووقت الالتحاق:</label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                id="enrollmentDate"
+                formControlName="student_enrollmentDate"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group mb-3">
+              <label for="stage">المرحلة:</label>
+              <select
+                class="form-control"
+                id="stage"
+                formControlName="student_stage"
+                required
+              >
+                <option value="أبتدائي">المرحلة الابتدائيه</option>
+                <option value="أعدادي">المرحلة الاعداديه</option>
+                <option value="ثانوي">المرحلة الثانويه</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group mb-3">
+              <label for="level">المستوى:</label>
+              @if(this.myform.controls['student_stage'].value=="ثانوي"||this.myform.controls['student_stage'].value=="أعدادي"){
+              <select
+                class="form-control"
+                id="level"
+                formControlName="student_level"
+                required
+              >
+                <option value="1">المستوى 1</option>
+                <option value="2">المستوى 2</option>
+                <option value="3">المستوى 3</option></select
+              >} @else{
+              <select
+                class="form-control"
+                id="level"
+                formControlName="student_level"
+                required
+              >
+                <option value="1">المستوى 1</option>
+                <option value="2">المستوى 2</option>
+                <option value="3">المستوى 3</option>
+                <option value="4">المستوى 4</option>
+                <option value="5">المستوى 5</option>
+                <option value="6">المستوى 6</option>
+              </select>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn btn-success btn-lg m-2"
+        (click)="addStudent()"
+      >
+        إضافة طالب آخر
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg m-2 margin-left: 10px;"
+      >
+        إرسال الطلب
+      </button>
+    </div>
+  </form>
+</div>
+<!-- display message -->
+<div class="container">
+  <div *ngIf="message_success" class="alert alert-success">
+    {{ message_success }}
+  </div>
+
+  <div *ngIf="message_error.length > 0" class="alert alert-danger">
+    <ul>
+      <li *ngFor="let error of message_error">{{ error }}</li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="container">
+  <!-- اختيار اسم الابن -->
+  <p style="margin-top: 5em; color: blueviolet">
+    من فضلك قم باختيار ابنك الذي تريد معرفه جدول حصصه*
+  </p>
+  <select (change)="onStudentChange($event)" class="form-control">
+    <option *ngFor="let student of student_data" [value]="student.userId">
+      {{ student.fallname }}
+    </option>
+  </select>
+
+  <!-- <div class="container"> -->
+  <div class="calendar">
+    <div class="header">
+      <button (click)="changeMonth(-1)">&#9664;</button>
+      <h2>{{ viewDate | date : "MMMM yyyy" }}</h2>
+      <button (click)="changeMonth(1)">&#9654;</button>
+    </div>
+
+    <!-- <div class="days-of-week"> -->
+    <div class="days-container">
+      <span>الاحد</span>
+      <span>الاثنين</span>
+      <span>الثلاثاء</span>
+      <span>الأربعاء</span>
+      <span>الخميس</span>
+      <span>الجمعة</span>
+      <span>السبت</span>
+    </div>
+    <!-- </div> -->
+
+    <div class="calendar-days">
+      <div
+        *ngFor="let day of days"
+        [ngClass]="{
+          today: day.isToday,
+          'in-month': day.isInMonth,
+          'not-in-month': !day.isInMonth,
+          'has-event': day.events && day.events.length > 0
+        }"
+        class="day-box"
+      >
+        <div class="day-number">{{ day.date.getDate() }}</div>
+        <div class="day-date">
+          {{ day.date.getDate() }}
+        </div>
+        <div *ngIf="day.events && day.events.length > 0">
+          <ul>
+            <li
+              *ngFor="let event of day.events"
+              [ngStyle]="{
+                color: event.color?.primary || 'black',
+                width: '8em',
+                fontSize: '12px'
+              }"
+            >
+              <p>حصه: {{ event.meta.session_name }}</p>
+
+              <p>مكان شرح: {{ event.meta.room }}</p>
+
+              <p>وقت البدايه:{{ event.meta.period }}{{ event.meta.start }}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>

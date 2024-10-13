@@ -1,0 +1,37 @@
+body {
+  font-family: Arial, sans-serif;
+  direction: rtl;
+  text-align: right;
+  background-color: #f8f9fa;
+}
+.container {
+  margin-top: 50px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+h2,
+h4 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.form-section {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+}
+.form-actions {
+  text-align: center;
+}
+button {
+  margin-top: 20px;
+}
+.remove-student {
+  color: #dc3545;
+  cursor: pointer;
+  font-weight: bold;
+}
+.remove-student:hover {
+  color: #c82333;
+}

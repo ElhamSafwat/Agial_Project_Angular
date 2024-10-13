@@ -1,0 +1,130 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5em;
+}
+
+.days-of-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.day-header {
+  font-weight: bold;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.day-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.today {
+  background-color: #ffd700;
+}
+
+.in-month {
+  color: black;
+}
+
+.not-in-month {
+  color: #ccc;
+}
+
+.has-event {
+  border: 2px solid green;
+}
+
+.days-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.days-container span {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+}
+
+/* تحسين الاستجابة للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .days-container {
+    justify-content: center;
+  }
+
+  .calendar-days {
+    grid-template-columns: repeat(4, 1fr); /* 4 أعمدة على الشاشات المتوسطة */
+  }
+
+  .day-box {
+    padding: 5px;
+  }
+
+  .day-number {
+    font-size: 1.2em;
+  }
+
+  .day-date {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-days {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* 2 أعمدة على الشاشات الصغيرة جداً */
+  }
+
+  .day-box {
+    width: 100%; /* العرض الكامل لكل عنصر */
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .days-container span {
+    width: 100%; /* جعل عناوين الأيام أيضاً تأخذ العرض الكامل */
+  }
+
+  .day-number {
+    font-size: 1em;
+  }
+
+  .day-date {
+    font-size: 0.7em;
+  }
+
+  .header {
+    font-size: 0.8em;
+    text-align: center;
+  }
+
+  .header h2 {
+    font-size: 1em;
+  }
+
+  .days-container {
+    flex-direction: column; /* جعل الأيام مرتبة عمودياً */
+  }
+}

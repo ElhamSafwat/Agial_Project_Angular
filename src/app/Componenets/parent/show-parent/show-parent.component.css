@@ -1,0 +1,15 @@
+/* لون مخصص للزر */
+.btn-purple {
+  background-color: #6f42c1;
+  color: white;
+}
+
+.btn-purple:hover {
+  background-color: #5a379c;
+  color: white;
+}
+
+/* لإزالة الفراغات الكبيرة */
+.container {
+  margin-top: 20px; /* لتقليل المسافة العلوية */
+}

@@ -1,0 +1,168 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div *ngIf="!isEditMode" class="col-md-6">
+      <div class="card shadow-sm p-4">
+        <div class="text-center">
+          <img
+            src="Images/profile.png"
+            alt="User Image"
+            class="rounded-circle mb-3 img-fluid"
+            style="width: 120px; height: 120px"
+          />
+        </div>
+        <div *ngIf="user">
+          <h4 class="text-center">{{ user.username }}</h4>
+          <p><strong>الاسم الكامل:</strong> {{ user.full_name }}</p>
+          <p><strong>البريد الإلكتروني:</strong> {{ user.email }}</p>
+          <p><strong>رقم الهاتف:</strong> {{ user.phone }}</p>
+          <button class="btn btn-primary w-100 mt-3" (click)="onEdit()">
+            تعديل
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isEditMode" class="col-md-6">
+      <div class="card shadow-sm p-4">
+        <h5 class="mb-4 text-center">اختر ما تريد تعديله:</h5>
+        <div class="d-flex justify-content-between mb-4">
+          <button
+            class="btn btn-secondary w-48 me-2"
+            (click)="editPersonalInfo()"
+          >
+            تعديل البيانات الشخصية
+          </button>
+          <button class="btn btn-secondary w-48" (click)="editPassword()">
+            تغيير كلمة المرور
+          </button>
+        </div>
+
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <div *ngIf="editMode === 'personal'">
+            <h5 class="mt-4 mb-3">تعديل البيانات الشخصية</h5>
+            <div class="form-group mb-3">
+              <label for="fullName">الاسم الكامل</label>
+              <input
+                type="text"
+                id="fullName"
+                formControlName="fullName"
+                class="form-control"
+                placeholder="أدخل الاسم الكامل"
+              />
+            </div>
+
+            @if (this.editForm.controls['fullName'].errors?.['required']) {
+            <div class="text-danger m-2">من فضلك قم بادخل اسم</div>
+            } @if (this.editForm.controls['fullName'].value != '' &&
+            this.editForm.controls['fullName'].value != null) { @if
+            (this.editForm.controls['fullName'].errors?.['minlength']) {
+            <div class="text-danger m-2">
+              يجب أن يكون الاسم على الأقل 3 أحرف.
+            </div>
+            } @if (this.editForm.controls['fullName'].errors?.['maxlength']) {
+            <div class="text-danger m-2">يجب ألا يزيد الاسم عن 100 حرفًا.</div>
+            } }
+
+            <div class="form-group mb-3">
+              <label for="email">البريد الإلكتروني</label>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                class="form-control"
+                placeholder="أدخل البريد الإلكتروني"
+              />
+            </div>
+            @if (this.editForm.controls['email'].value!=''
+            &&this.editForm.controls['email'].value!=null) {
+            @if(this.editForm.controls['email'].invalid){
+            <div class="text-danger m-2">
+              يرجى إدخال عنوان بريد إلكتروني صالح
+            </div>
+            }}
+            <div class="form-group mb-3">
+              <label for="phone">رقم الهاتف</label>
+              <input
+                type="text"
+                id="phone"
+                formControlName="phone"
+                class="form-control"
+                placeholder="أدخل رقم الهاتف"
+              />
+            </div>
+            @if (this.editForm.controls['phone'].value!=''
+            &&this.editForm.controls['phone'].value!=null) {
+            @if(this.editForm.controls['phone'].invalid){
+            <div class="text-danger m-2">
+              من فضلك ادخل رقم تلفون متبعوعا بكود دولتك
+            </div>
+            }}
+          </div>
+
+          <div *ngIf="editMode === 'password'">
+            <h5 class="mt-4 mb-3">تغيير كلمة المرور</h5>
+            <div class="form-group mb-3">
+              <label for="currentPassword">كلمة المرور الحالية</label>
+              <input
+                type="password"
+                id="currentPassword"
+                formControlName="currentPassword"
+                class="form-control"
+                placeholder="أدخل كلمة المرور الحالية"
+              />
+            </div>
+            @if (this.editForm.controls['currentPassword'].value!=''
+            &&this.editForm.controls['currentPassword'].value!=null) {
+            @if(this.editForm.controls['currentPassword'].invalid){
+            <div class="text-danger m-2">
+              يجب أن تكون كلمة المرور 6 أحرف على الأقل، تحتوي على حرف كبير، رمز،
+              ورقم واحد على الأقل.
+            </div>
+            }}
+            <div class="form-group mb-3">
+              <label for="newPassword">كلمة المرور الجديدة</label>
+              <input
+                type="password"
+                id="newPassword"
+                formControlName="newPassword"
+                class="form-control"
+                placeholder="أدخل كلمة المرور الجديدة"
+              />
+            </div>
+            @if (this.editForm.controls['newPassword'].value!=''
+            &&this.editForm.controls['newPassword'].value!=null) {
+            @if(this.editForm.controls['newPassword'].invalid){
+            <div class="text-danger m-2">
+              يجب أن تكون كلمة المرور 6 أحرف على الأقل، تحتوي على حرف كبير، رمز،
+              ورقم واحد على الأقل.
+            </div>
+            }}
+            <div class="form-group mb-3">
+              <label for="confirmPassword">تأكيد كلمة المرور الجديدة</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                class="form-control"
+                placeholder="أكد كلمة المرور الجديدة"
+              />
+            </div>
+            @if (this.editForm.controls['confirmPassword'].value!=''
+            &&this.editForm.controls['confirmPassword'].value!=null) {
+            @if(editForm.controls['confirmPassword'].value!==
+            editForm.controls["newpassword"].value){
+            <div class="text-danger m-2">كلمات المرور غير متطابقة.</div>
+            }}
+          </div>
+
+          <button class="btn btn-success w-100 mt-3" type="submit">
+            حفظ التعديلات
+          </button>
+          <button class="btn btn-secondary w-100 mt-2" (click)="onCancel()">
+            إلغاء
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

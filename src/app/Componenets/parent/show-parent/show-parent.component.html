@@ -1,0 +1,161 @@
+<div class="container mt-5">
+  <h1 class="text-center mb-4">صفحة بيانات أولياء الأمور</h1>
+
+  <div class="d-flex justify-content-center align-items-center">
+    <!-- <a class="btn btn-primary mx-2" routerLink="/show-parent" role="button" -->
+    <!-- >عرض</a> -->
+
+    <a class="btn btn-success mx-2" routerLink="/add-parent" role="button"
+      >إضافة</a
+    >
+
+    <!-- <form (ngSubmit)="onSearch()" class="d-flex" id="search"> -->
+    <input
+      type="text"
+      class="form-control mx-2"
+      placeholder="ابحث عن اسم ولي الأمر"
+      [(ngModel)]="parentName"
+      name="parentName"
+      (input)="onSearch()"
+      required
+    />
+    <!-- <button class="btn btn-purple" type="submit">إرسال</button> -->
+    <!-- </form> -->
+  </div>
+</div>
+<div *ngIf="isLoading" class="spinner">جاري التحميل...</div>
+<div *ngIf="!isLoading">
+  <div class="container mt-4">
+    <div
+      *ngIf="No_data_search"
+      class="alert alert-warning alert-dismissible fade show text-center"
+    >
+      {{ No_data_search }}
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="row">
+      <!-- عرض البطاقات -->
+
+      <div class="col-md-6 mb-4" *ngFor="let user of paginatedUsers">
+        <div
+          class="card shadow-sm custom-card border-light"
+          style="background-color: #f8f9fa"
+        >
+          <div class="card-body">
+            <h5 class="card-title">اسم ولي الأمر: {{ user.fullName }}</h5>
+            <div
+              class="student-info"
+              style="display: flex; flex-direction: column"
+            >
+              <div class="info-item">
+                <strong>رقم الهاتف:</strong> {{ user.fullphone }}
+              </div>
+              <div class="info-item">
+                <strong>البريد الإلكتروني:</strong> {{ user.email }}
+              </div>
+              <div class="info-item">
+                <strong>الطلاب:</strong>
+              </div>
+              <div
+                class="students-list"
+                style="max-height: 150px; overflow-y: auto"
+              >
+                <ul *ngIf="user.studentname.length > 0; else noStudents">
+                  <li
+                    *ngFor="let student of user.studentname"
+                    style="margin-bottom: 5px"
+                  >
+                    اسم الابن: {{ student }}
+                  </li>
+                </ul>
+                <ng-template #noStudents>
+                  <p style="color: #dc3545">لم يتم إضافة أبناء بعد.</p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-between">
+            <button class="btn" style="background-color: #b634b6; color: white">
+              <a
+                routerLink="/update/{{ user.userId }}"
+                style="text-decoration: none; color: white"
+              >
+                تعديل</a
+              >
+            </button>
+            <button
+              class="btn"
+              style="background-color: #fd0019; color: white"
+              (click)="del(user.userId)"
+            >
+              حذف
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination controls -->
+    <div *ngIf="!No_data_search">
+      <nav aria-label="Page navigation" *ngIf="totalPages > 1">
+        <ul class="pagination justify-content-center mt-4">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="changePage(currentPage - 1)"
+              >السابق</a
+            >
+          </li>
+          <li
+            class="page-item"
+            *ngFor="let page of [].constructor(totalPages); let i = index"
+            [class.active]="currentPage === i + 1"
+          >
+            <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="changePage(currentPage + 1)"
+              >التالي</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<style>
+  .custom-card {
+    height: 400px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+    width: 100%;
+  }
+
+  .students-list {
+    max-height: 150px;
+    overflow-y: auto;
+  }
+
+  .student-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-item {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .custom-card:hover {
+    transform: scale(1.05);
+  }
+  .spinner {
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(238, 17, 17);
+    margin-top: 80px;
+    margin-right: 600px;
+  }
+</style>

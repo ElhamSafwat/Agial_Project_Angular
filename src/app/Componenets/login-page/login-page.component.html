@@ -1,0 +1,61 @@
+<div class="background-container">
+  <div class="container w-50 py-5 bgColor">
+    <h3 class="text-center">تسجيل الدخول</h3>
+    <form [formGroup]="myform" (ngSubmit)="send_data()">
+      <div class="mb-3">
+        <label for="userName" class="form-label"
+          >أسم المستخدم او الايميل:</label
+        >
+        <input
+          type="text"
+          class="form-control w-100"
+          id="userName"
+          placeholder="من فضلك ادخل أسم المستخدم او الايميل"
+          formControlName="user_email"
+        />
+        <span class=""></span>
+        <div
+          *ngIf="
+            myform.controls['user_email'].invalid &&
+            (myform.controls['user_email'].touched ||
+              myform.controls['user_email'].dirty)
+          "
+        >
+          <div class="text-danger">من فضلك قم بداخل اميل او اسم مستخدم</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label text-center">كلمه السر:</label>
+        <input
+          type="password"
+          class="form-control w-100"
+          id="password"
+          placeholder="من فضلك ادخل كلمه السر"
+          formControlName="password"
+        />
+      </div>
+      @if (this.myform.controls['password'].value!=''
+      &&this.myform.controls['password'].value!=null) {
+      @if(this.myform.controls['password'].invalid){
+      <div class="text-danger m-2">
+        يجب أن تكون كلمة المرور 6 أحرف على الأقل، تحتوي على حرف كبير، رمز، ورقم
+        واحد على الأقل.
+      </div>
+      }}
+      <div class="mb-3">
+        <button
+          class="btn w-100 fs-4 py-2 mt-2 BtnLogonColor"
+          [disabled]="myform.invalid"
+        >
+          تسجيل دخول
+        </button>
+      </div>
+    </form>
+    <!-- @if(message_error!=''){
+    <div class="text-danger m-2">{{ message_error }}</div>
+    } @if(myform.controls['password'].value=='' &&
+    myform.controls['user_email'].value==''){
+    <div class="text-danger m-2">من فضلك قم بادخال داتا في جميع الحقول</div>
+    } -->
+  </div>
+</div>

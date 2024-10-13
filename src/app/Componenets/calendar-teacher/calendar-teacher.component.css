@@ -1,0 +1,79 @@
+.calendar {
+  max-width: 100%; /* يمنع تجاوز العرض */
+  margin: 0 auto; /* توسيط العنصر */
+  padding: 10px; /* إضافة حواف داخلية */
+}
+@media (max-width: 768px) {
+  .system-btn {
+    font-size: 1.2rem;
+  }
+  .day-header {
+    font-size: 0.8em; /* تقليل حجم الخط لأيام الأسبوع */
+  }
+
+  .header h2 {
+    font-size: 1.2em; /* تقليل حجم عنوان الشهر */
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5em;
+}
+
+.days-of-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 أعمدة */
+  gap: 10px; /* الفراغ بين الأعمدة */
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.day-header {
+  font-weight: bold;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 أعمدة */
+  gap: 10px; /* الفراغ بين الأيام */
+}
+
+.day-box {
+  border: 1px solid #ccc; /* حدود المربع */
+  padding: 10px;
+  border-radius: 5px; /* زوايا دائرية */
+  text-align: center;
+  background-color: #f9f9f9; /* لون خلفية المربع */
+}
+
+.today {
+  background-color: #ffd700; /* لون خاص لليوم الحالي */
+}
+
+.in-month {
+  color: black; /* لون النص للأيام في الشهر الحالي */
+}
+
+.not-in-month {
+  color: #ccc; /* لون النص للأيام خارج الشهر الحالي */
+}
+
+.has-event {
+  border: 2px solid green; /* حدود للأيام التي تحتوي على أحداث */
+}
+.days-container {
+  display: flex;
+  justify-content: space-around; /* لتوزيع العناصر بشكل متساوي */
+  flex-wrap: wrap; /* لتوزيع العناصر على صفوف متعددة إذا كانت الشاشة ضيقة */
+  padding: 10px;
+}
+
+.days-container span {
+  flex: 1; /* لجعل كل عنصر يأخذ مساحة متساوية */
+  text-align: center; /* لمحاذاة النص في الوسط */
+  padding: 10px;
+}
