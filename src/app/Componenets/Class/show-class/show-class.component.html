@@ -1,0 +1,44 @@
+<div class="container mt-4">
+  <h1 class="text-center mb-3">المجموعات</h1>
+  <a
+    routerLink="/AddClass"
+    class="btn btn-success mx-2"
+    style="margin-bottom: 2em"
+    >اضافه</a
+  >
+  <div *ngIf="AllClass.length === 0" class="alert alert-warning text-center">
+    لم يتم إضافة أي مجموعات بعد.
+  </div>
+
+  <div class="row">
+    <div
+      class="col-md-6"
+      *ngFor="
+        let sess of AllClass | paginate : { itemsPerPage: 40, currentPage: p }
+      "
+    >
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">اسم مجموعه:{{ sess.className }}</h5>
+          <p class="card-text">المرحلة: {{ sess.stage }}</p>
+          <p class="card-text">المستوى: {{ sess.level }}</p>
+          <p class="card-text">
+            اسماء المدرسين: {{ sess.teacherNames.join(", ") }}
+          </p>
+          <p class="card-text">
+            اسماء الطلاب: {{ sess.studentNames.join(", ") }}
+          </p>
+          <a routerLink="/EditClass/{{ sess.classID }}" class="btn btn-warning">
+            تعديل
+          </a>
+          <!-- <a routerLink="/add" class="btn btn-warning"> تعديل </a> -->
+          <button (click)="deleteClass(sess.classID)" class="btn btn-danger">
+            حذف
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

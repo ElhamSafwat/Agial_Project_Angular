@@ -1,0 +1,99 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-4">إضافة طالب جديد</h2>
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="studentName">اسم المستخدم</label>
+            <input type="text" id="studentName" class="form-control" formControlName="Student_Name" placeholder="ادخل اسم المستخدم" required />
+            <div *ngIf="studentForm.get('Student_Name')?.invalid && studentForm.get('Student_Name')?.touched" class="text-danger">
+                اسم المستخدم مطلوب.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="fullName">الاسم بالكامل</label>
+            <input type="text" id="fullName" class="form-control" formControlName="fullName" placeholder="ادخل الاسم بالكامل" required />
+            <div *ngIf="studentForm.get('fullName')?.invalid && studentForm.get('fullName')?.touched" class="text-danger">
+                الاسم بالكامل مطلوب.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="parentSelect">اسم ولي الأمر</label>
+            <select formControlName="parent_ID" class="form-control" required>
+                <option value="">اختر اسماً</option>
+                <option *ngFor="let parent of filteredNames" [value]="parent.userId">{{ parent.fullName }}</option>
+            </select>
+            <div *ngIf="studentForm.get('parent_ID')?.invalid && studentForm.get('parent_ID')?.touched" class="text-danger">
+                اختيار الاسم مطلوب.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="studentEmail">البريد الإلكتروني</label>
+            <input type="email" id="studentEmail" class="form-control" formControlName="Student_Email" placeholder="ادخل البريد الإلكتروني" required />
+            <div *ngIf="studentForm.get('Student_Email')?.invalid && studentForm.get('Student_Email')?.touched" class="text-danger">
+             يجب أن يكون بريد إلكتروني صالح،وينتهي ب (gmail، yahoo، أو hotmail ).com
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">كلمة السر</label>
+            <input type="password" id="password" class="form-control" formControlName="Password" placeholder="ادخل كلمة السر" required />
+            <div *ngIf="studentForm.get('Password')?.invalid && studentForm.get('Password')?.touched" class="text-danger">
+                كلمة السر مطلوبة ويجب أن تحتوي على حرف كبير، حروف صغيرة، أرقام، وعلامات خاصة.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">تأكيد كلمة السر</label>
+            <input type="password" id="confirmPassword" class="form-control" formControlName="ConfirmPassword" placeholder="تأكيد كلمة السر" required />
+            <div *ngIf="studentForm.errors?.['passwordsMismatch'] && studentForm.get('ConfirmPassword')?.touched" class="text-danger">
+                كلمات المرور غير متطابقة.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNumber">رقم الهاتف</label>
+            <input type="text" id="phoneNumber" class="form-control" formControlName="Phone_Number" placeholder="ادخل رقم الهاتف" required />
+            <div *ngIf="studentForm.get('Phone_Number')?.invalid && studentForm.get('Phone_Number')?.touched" class="text-danger">
+                رقم الهاتف مطلوب.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="enrollmentDate">تاريخ التسجيل</label>
+            <input type="date" id="enrollmentDate" class="form-control" formControlName="enrollmentDate" required />
+            <div *ngIf="studentForm.get('enrollmentDate')?.invalid && studentForm.get('enrollmentDate')?.touched" class="text-danger">
+                تاريخ التسجيل مطلوب.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="stage">المرحلة الدراسية</label>
+            <select id="stage" class="form-control" formControlName="Stage" required>
+                <option value="">اختر المرحلة</option>
+                <option value="أبتدائي">أبتدائي</option>
+                <option value="أعدادي">أعدادي</option>
+                <option value="ثانوي">ثانوي</option>
+            </select>
+            <div *ngIf="studentForm.get('Stage')?.invalid && studentForm.get('Stage')?.touched" class="text-danger">
+                المرحلة الدراسية مطلوبة.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="level">المستوى</label>
+            <select id="level" class="form-control" formControlName="Level" required>
+                <option value="">اختر المستوى</option>
+                <option *ngFor="let level of levels" [value]="level">{{ level }}</option>
+            </select>
+            <div *ngIf="studentForm.get('Level')?.invalid && studentForm.get('Level')?.touched" class="text-danger">
+                يجب إدخال مستوى صحيح.
+            </div>
+        </div>
+        <div class="button-container">
+            <button type="submit"  class="submit-button">حفظ</button>
+        </div>
+        <br><br>
+    </form>
+</div>
