@@ -1,0 +1,112 @@
+
+.navbar {
+    height: 60px;
+}
+
+.navbar-brand img {
+    height: 130px;
+    object-fit: contain;
+    margin-top: 40px;
+}
+
+.navbar-nav .nav-item .nav-link {
+    line-height: 30px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    background-color: #b02cb0;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.Color_Header {
+    background-color: rgb(203, 163, 240);
+    opacity: .85;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar-brand img {
+        height: 70px; 
+        margin-top:-10px;
+    }
+
+    .navbar-nav {
+        text-align: center; 
+    }
+
+    .navbar-nav .nav-item {
+        margin-bottom: 10px; 
+        /* border: 1px solid red; */
+        margin-left: 10px;
+    }
+    .collapse .WordRaesy{
+        margin-left: 50px !important;
+        /* border: 1px solid blue !important; */
+    }
+
+    .navbar-nav .nav-item .nav-link {
+        line-height: normal; 
+        padding: 8px 5px; 
+        font-size: 14px; 
+    }
+
+    .navbar-toggler {
+        margin-right: 20px;
+        margin-top: -10px; 
+        z-index: 100000000000;
+    }
+
+    .navbar-collapse {
+        background-color: rgb(203, 163, 240); 
+        padding: 10px 0;
+        position: absolute; 
+        top: 60px;
+        left: 0;
+        right: 0;
+        z-index: 999; 
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .navbar {
+        height: 70px; 
+    }
+
+    .navbar-brand img {
+        height: 100px; 
+        margin-top: -20px;
+    }
+
+    .navbar-nav .nav-item .nav-link {
+        line-height: normal; 
+        padding: 10px 15px; 
+        font-size: 16px; 
+    }
+
+    .navbar-toggler {
+        margin-right: 15px; 
+        margin-top: -30px; 
+    }
+
+    .navbar-collapse {
+        background-color: rgba(203, 163, 240, 0.85); 
+        padding: 20px 0; 
+    }
+
+    .collapse .WordRaesy {
+        margin-left: 30px !important;
+    }
+
+    .navbar-nav .nav-item {
+        margin-bottom: 15px; 
+        margin-left: 15px;
+    }
+}
+
