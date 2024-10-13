@@ -1,0 +1,130 @@
+<div class="container mt-4">
+  <form (ngSubmit)="AddExam(userData)" #examForm="ngForm" novalidate>
+    <!-- Exam Date -->
+    <div class="mb-3">
+      <label for="exam_Date" class="form-label">تاريخ الامتحان</label>
+      <input
+        type="date"
+        id="exam_Date"
+        class="form-control"
+        [(ngModel)]="userData.exam_Date"
+        name="exam_Date"
+        required
+        #examDate="ngModel"
+      />
+      <div *ngIf="examDate.invalid && examDate.touched" class="text-danger">
+        يرجى إدخال تاريخ الامتحان.
+      </div>
+    </div>
+
+    <!-- Start Time -->
+    <div class="mb-3">
+      <label for="start_Time" class="form-label">وقت البدء</label>
+      <input
+        type="number"
+        id="start_Time"
+        class="form-control"
+        [(ngModel)]="userData.start_Time"
+        name="start_Time"
+        min="1"
+        max="12"
+        required
+        #startTime="ngModel"
+      />
+      <div *ngIf="startTime.invalid && startTime.touched" class="text-danger">
+        يرجى إدخال وقت البدء بين 1 و 12.
+      </div>
+    </div>
+
+    <!-- End Time -->
+    <div class="mb-3">
+      <label for="end_Time" class="form-label">وقت الانتهاء</label>
+      <input
+        type="number"
+        id="end_Time"
+        class="form-control"
+        [(ngModel)]="userData.end_Time"
+        name="end_Time"
+        min="1"
+        max="12"
+        required
+        #endTime="ngModel"
+      />
+      <div *ngIf="endTime.invalid && endTime.touched" class="text-danger">
+        يرجى إدخال وقت الانتهاء بين 1 و 12.
+      </div>
+    </div>
+
+    <!-- Minimum Degree -->
+    <div class="mb-3">
+      <label for="min_Degree" class="form-label">الدرجة الدنيا</label>
+      <input
+        type="number"
+        id="min_Degree"
+        class="form-control"
+        [(ngModel)]="userData.min_Degree"
+        name="min_Degree"
+        min="1"
+        required
+        #minDegree="ngModel"
+      />
+      <div *ngIf="minDegree.invalid && minDegree.touched" class="text-danger">
+        يرجى إدخال الحد الأدنى للدرجات (يجب أن تكون قيمة موجبة) وأكبر من صفر
+      </div>
+    </div>
+
+    <!-- Maximum Degree -->
+    <div class="mb-3">
+      <label for="max_Degree" class="form-label">الدرجة القصوى</label>
+      <input
+        type="number"
+        id="max_Degree"
+        class="form-control"
+        [(ngModel)]="userData.max_Degree"
+        name="max_Degree"
+        min="0"
+        required
+        #maxDegree="ngModel"
+      />
+      <div *ngIf="maxDegree.invalid && maxDegree.touched" class="text-danger">
+        يرجى إدخال الحد الأقصى للدرجات (يجب أن تكون قيمة موجبة).
+      </div>
+      <div
+        *ngIf="userData.max_Degree <= userData.min_Degree && maxDegree.touched"
+        class="text-danger"
+      >
+        يجب أن تكون الدرجة القصوى أكبر من الدرجة الدنيا.
+      </div>
+    </div>
+
+    <!-- Class Select -->
+    <div class="form-group">
+      <label for="classSelect">اختر الصف:</label>
+      <select
+        id="classSelect"
+        class="form-control"
+        [(ngModel)]="userData.class_name"
+        name="className"
+        required
+        #className="ngModel"
+      >
+        <option *ngFor="let class of classes" [value]="class">
+          {{ class }}
+        </option>
+      </select>
+      <div *ngIf="className.invalid && className.touched" class="text-danger">
+        يرجى اختيار الصف.
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="examForm.invalid"
+      style="margin-top: 1em"
+    >
+      إضافة الامتحان
+    </button>
+  </form>
+</div>
