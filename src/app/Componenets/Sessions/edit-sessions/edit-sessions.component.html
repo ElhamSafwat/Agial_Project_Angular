@@ -1,0 +1,126 @@
+<div class="container d-flex justify-content-between align-items-center mt-5">
+  <h1 class="mb-0 mx-auto">تعديل ميعاد الحصه</h1>
+  <button routerLink="/sessions" class="btn btn-secondary">رجوع</button>
+</div>
+
+<div
+  class="container mt-4 p-4"
+  style="
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: auto;
+  "
+>
+  <form (ngSubmit)="saveChanges()" #sessionForm="ngForm">
+    <div class="mb-3">
+      <label for="room" class="form-label">القاعة</label>
+      <input
+        type="text"
+        id="room"
+        class="form-control"
+        [(ngModel)]="session.room"
+        name="room"
+        (ngModelChange)="validateRoom()"
+        required
+      />
+      <div
+        *ngIf="roomNumberInvalid && sessionForm.controls['room']?.touched"
+        class="text-danger"
+      >
+        يجب إدخال رقم القاعة.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="date" class="form-label">التاريخ:</label>
+      <input
+        type="date"
+        id="date"
+        class="form-control"
+        name="date"
+        [(ngModel)]="session.date"
+        #dateInput="ngModel"
+        (ngModelChange)="validateDate()"
+        required
+      />
+      <div *ngIf="dateInvalid && dateInput.touched" class="text-danger">
+        يجب أن يكون التاريخ اليوم أو بعده.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="startTime" class="form-label">وقت البداية:</label>
+      <input
+        type="text"
+        id="startTime"
+        class="form-control"
+        name="startTime"
+        [(ngModel)]="session.start_Time"
+        #startTimeInput="ngModel"
+        (ngModelChange)="validateStartTime()"
+        required
+      />
+      <div
+        *ngIf="startTimeInvalid && startTimeInput.touched"
+        class="text-danger"
+      >
+        يجب أن يكون الوقت بين 1 و 12.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="endTime" class="form-label">وقت الانتهاء:</label>
+      <input
+        type="text"
+        id="endTime"
+        class="form-control"
+        name="endTime"
+        [(ngModel)]="session.end_Time"
+        #endTimeInput="ngModel"
+        (ngModelChange)="validateEndTime()"
+        required
+      />
+      <div *ngIf="endTimeInvalid && endTimeInput.touched" class="text-danger">
+        يجب أن يكون الوقت بين 1 و 12.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="period" class="form-label">الفترة</label>
+      <select
+        id="period"
+        class="form-select"
+        [(ngModel)]="session.period"
+        name="period"
+        required
+      >
+        <option value="" disabled selected>اختر فترة</option>
+        <option value="صباحا">صباحا</option>
+        <option value="مساءا">مساءا</option>
+      </select>
+      <div
+        *ngIf="!session.period && sessionForm.controls['period']?.touched"
+        class="text-danger"
+      >
+        يجب اختيار فترة.
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <button
+        type="submit"
+        class="btn btn-lg w-100"
+        style="
+          background-color: #aa62a4;
+          border-color: #a6239b;
+          height: 50px;
+          font-size: 1.5rem;
+        "
+        [disabled]="sessionForm.invalid"
+      >
+        حفظ
+      </button>
+    </div>
+  </form>
+</div>

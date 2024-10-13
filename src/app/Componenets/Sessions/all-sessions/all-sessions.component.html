@@ -1,0 +1,112 @@
+<div class="container centered">
+    <h1 class="text-center">مواعيد الحصص</h1>
+</div>
+
+<br>
+<div class="button-container">
+    <button routerLink="/sessions" (click)="showAllSessions()">عرض كل الحصص</button>
+    <button routerLink="/add-session">أضافه حصه جديده</button>
+    <button (click)="toggleSearch()">
+        {{ showAdvancedSearch ? 'إخفاء خيارات البحث' : 'بحث متقدم' }}
+    </button>
+</div>
+
+
+<div *ngIf="showAdvancedSearch" class="container mt-5">
+    <div class="row">
+        <!-- بحث بالتاريخ -->
+        <div class="col-md-4 mb-1"> <!-- تقليل العرض إلى 4 -->
+            <div class="search-group p-4 bg-light border rounded shadow">
+                <label for="searchDate" class="form-label">بحث بالتاريخ</label>
+                <input type="date" id="searchDate" class="form-control" [(ngModel)]="searchDate">
+                <button class="btn btn-primary mt-3" (click)="searchByDate()">بحث</button>
+            </div>
+        </div>
+
+        <!-- بحث بفترة معينة -->
+        <div class="col-md-4 mb-1"> <!-- تقليل العرض إلى 4 -->
+            <div class="search-group p-4 bg-light border rounded shadow">
+                <h3 class="text-center">بحث بفترة معينة:</h3>
+                <div class="mb-3">
+                    <label for="fromDate" class="form-label">من تاريخ:</label>
+                    <input type="date" id="fromDate" class="form-control" [(ngModel)]="fromDate">
+                </div>
+
+                <div class="mb-3">
+                    <label for="toDate" class="form-label">إلى تاريخ:</label>
+                    <input type="date" id="toDate" class="form-control" [(ngModel)]="toDate">
+                </div>
+
+                <button class="btn btn-primary w-100" (click)="searchByDateRange()">بحث في الفترة</button>
+            </div>
+        </div>
+
+        <!-- بحث بالمجموعة، المرحلة، والمستوى -->
+        <div class="col-md-4 mb-1"> <!-- تقليل العرض إلى 4 -->
+            <div class="search-group p-4 bg-light border rounded shadow">
+                <h3 class="text-center">بحث بالمجموعة، المرحلة، والمستوى:</h3>
+
+                <div class="mb-3">
+                    <label for="className" class="form-label">اسم المجموعة:</label>
+                    <input type="text" id="className" class="form-control" [(ngModel)]="className">
+                </div>
+
+                <div class="mb-3">
+                    <label for="period" class="form-label">المرحلة</label>
+                    <select id="period" class="form-select" [(ngModel)]="selectedStage" (change)="updateLevels()" required>
+                        <option value="" disabled selected>اختر المرحلة</option>
+                        <option *ngFor="let period of periods" [value]="period.value">{{ period.label }}</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="level" class="form-label">المستوى</label>
+                    <select id="level" class="form-select" [(ngModel)]="selectedLevel" required>
+                        <option value="" disabled selected>اختر المستوى</option>
+                        <option *ngFor="let level of levels" [value]="level">{{ level }}</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary w-100" (click)="searchByClassStageLevel()">بحث</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <table class="table ">
+        <thead>
+            <tr>
+                <td>اسم الماده </td>
+                <td> اسم المدرس </td>
+                <td>المجموعة </td>
+                <td>القاعة </td>
+                <td>التاريخ </td>
+                <td>وقت البدايه </td>
+                <td>وقت الانتهاء </td>
+                <td>الفترة </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody >
+            <!-- @for (sess of sessions; track sess.session_ID ) { 
+                <tr *ngFor="let sess of sessions | paginate: { itemsPerPage: 5, currentPage: p }"> -->
+                    <tr *ngFor="let sess of filteredSessions | paginate: { itemsPerPage: 7, currentPage: p }">
+
+                    <td>{{sess.session_Title}}</td>
+                    <td> {{sess.teacher_Name }}</td>
+                    <td>{{sess.class_Name}}</td>
+                    <td> {{sess.room}}</td>
+                    <td> {{sess.date}}</td>
+                    <td> {{sess.start_Time}}</td>
+                    <td> {{sess.end_Time}}</td>
+                    <td> {{sess.period}}</td>
+                    <td><a routerLink="/edit-session/{{sess.session_ID}}" class="btn btn-dark">تعديل</a></td>
+                    <td><a (click)="deleteSession(sess.session_ID)" class="btn btn-dark">حذف</a></td>
+                </tr>
+             <!-- }  -->
+        </tbody>
+    </table>  
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+</div>

@@ -1,0 +1,121 @@
+<form
+  (ngSubmit)="onSubmitAssignment()"
+  class="bg-light p-4 rounded shadow-sm mx-auto"
+  style="max-width: 800px; margin-top: 20px; margin-bottom: 20px"
+>
+  <div class="container">
+    <h2 class="text-center mb-4">إضافة واجب جديد</h2>
+
+    <div class="mb-3 d-flex justify-content-between">
+      <div class="me-2 w-50" style="margin-left: 2em">
+        <label for="sessionDate" class="form-label">تاريخ الحصة</label>
+        <input
+          type="text"
+          id="sessionDate"
+          class="form-control"
+          [(ngModel)]="sessionDate"
+          name="sessionDate"
+          placeholder="yyyy-MM-dd"
+          required
+        />
+      </div>
+      <div class="ms-2 w-50">
+        <label for="sessionTime" class="form-label">وقت البدء</label>
+        <input
+          type="text"
+          id="sessionTime"
+          class="form-control"
+          [(ngModel)]="sessionTime"
+          name="sessionTime"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="assignmentText" class="form-label">نص الواجب</label>
+      <textarea
+        id="assignmentText"
+        class="form-control"
+        [(ngModel)]="assignmentText"
+        name="assignmentText"
+        rows="4"
+        required
+      ></textarea>
+    </div>
+
+    <div>
+      <button type="submit" class="btn btn-success">تسجيل الواجب</button>
+    </div>
+  </div>
+</form>
+
+<form
+  (ngSubmit)="onSubmitGrades()"
+  class="bg-light p-4 rounded shadow-sm mx-auto"
+  style="max-width: 800px; margin-top: 20px; margin-bottom: 20px"
+>
+  <div class="container">
+    <h4 class="mt-4">تسجيل درجات الطلاب للواجبات الموجودة</h4>
+    <div class="mb-3 d-flex justify-content-between">
+      <div class="me-2 w-50">
+        <label for="assignmentDate" class="form-label">ادخل التاريخ</label>
+        <input
+          type="date"
+          id="assignmentDate"
+          name="assignmentDate"
+          [(ngModel)]="selectedDate"
+          (change)="loadAssignments()"
+          required
+          class="form-control mt-2"
+          placeholder="yyyy-MM-dd"
+        />
+      </div>
+
+      <div class="me-2 w-50">
+        <label for="existingAssignments" class="form-label">اختر الواجب</label>
+        <select
+          id="existingAssignments"
+          name="existingAssignments"
+          [(ngModel)]="selectedAssignment"
+          required
+          class="form-select mt-2"
+        >
+          <option
+            *ngFor="let assignment of assignments"
+            [value]="assignment.sessionID"
+          >
+            {{ assignment.assignment }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>اسم الطالب</th>
+          <th>الدرجة</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students">
+          <td>{{ student.fullName }}</td>
+          <td>
+            <input
+              type="number"
+              [(ngModel)]="student.degree"
+              name="degree-{{ student.userID }}"
+              class="form-control"
+              placeholder="أدخل الدرجة"
+              min="0"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between mt-4">
+      <button type="submit" class="btn btn-primary">تسجيل الدرجات</button>
+    </div>
+  </div>
+</form>
