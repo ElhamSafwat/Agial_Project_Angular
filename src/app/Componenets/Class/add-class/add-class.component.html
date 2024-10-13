@@ -1,0 +1,111 @@
+<div class="container mt-5">
+  <h2>إضافة فصل جديد</h2>
+
+  <form [formGroup]="classForm" (ngSubmit)="onSubmit()">
+    <!-- (ngSubmit)="onSubmit()" -->
+    <div class="form-group">
+      <label for="className">اسم الفصل</label>
+      <input
+        id="className"
+        class="form-control"
+        formControlName="className"
+        type="text"
+        required
+      />
+      <div
+        *ngIf="
+          classForm.controls['className'].invalid &&
+          classForm.controls['className'].touched
+        "
+      >
+        اسم الفصل مطلوب.
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="form-group mb-3">
+        <label for="stage">المرحلة:</label>
+        <select
+          class="form-control"
+          id="stage"
+          formControlName="student_stage"
+          required
+          (change)="selectstage()"
+        >
+          <option value="أبتدائي">المرحلة الابتدائيه</option>
+          <option value="أعدادي">المرحلة الاعداديه</option>
+          <option value="ثانوي">المرحلة الثانويه</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="form-group mb-3">
+        <label for="level">المستوى:</label>
+        @if(this.classForm.controls['student_stage'].value=="ثانوي"||this.classForm.controls['student_stage'].value=="أعدادي"){
+        <select
+          class="form-control"
+          id="level"
+          formControlName="student_level"
+          required
+          (change)="selectlevel()"
+        >
+          <option value="1">المستوى 1</option>
+          <option value="2">المستوى 2</option>
+          <option value="3">المستوى 3</option></select
+        >} @else{
+        <select
+          class="form-control"
+          id="level"
+          formControlName="student_level"
+          required
+          (change)="selectlevel()"
+        >
+          <option value="1">المستوى 1</option>
+          <option value="2">المستوى 2</option>
+          <option value="3">المستوى 3</option>
+          <option value="4">المستوى 4</option>
+          <option value="5">المستوى 5</option>
+          <option value="6">المستوى 6</option>
+        </select>
+        }
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="studentIds">اختر الطلاب</label>
+      <select
+        id="studentIds"
+        formControlName="studentIds"
+        multiple
+        class="form-control"
+      >
+        <option *ngFor="let student of students" [value]="student.student_id">
+          {{ student.student_name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="teacherId">اختر المعلمين</label>
+      <select
+        id="teacherId"
+        formControlName="teacherId"
+        multiple
+        class="form-control"
+      >
+        <option *ngFor="let teacher of teachers" [value]="teacher.teacher_id">
+          {{ teacher.teacher_name }}
+        </option>
+      </select>
+    </div>
+
+    <!--submit button-->
+    <button
+      type="submit"
+      [disabled]="classForm.invalid"
+      class="btn btn-primary"
+    >
+      إضافة فصل
+    </button>
+  </form>
+</div>

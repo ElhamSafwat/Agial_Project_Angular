@@ -1,0 +1,26 @@
+.card {
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: #e241c7;
+}
+
+.card-text {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.btn {
+  margin-right: 5px;
+}
+
+.alert {
+  margin-top: 20px;
+}
+
+.row {
+  margin-bottom: 20px;
+}

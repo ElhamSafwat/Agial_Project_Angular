@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text">الواجبات التي لم يتم تسليمها</h2>
+    <a routerLink="/HomeStudent" class="btn btn-primary">رجوع</a>
+  </div>
+
+  <div>
+    <table class="table table-striped table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <td>اسم الماده</td>
+          <td>الواجب</td>
+          <td>تاريخ الواجب</td>
+        </tr>
+      </thead>
+      <tbody>
+        @for (asign of assignment; track asign.session_ID) {
+        <tr>
+          <td>{{ asign.subject_Name }}</td>
+          <td>{{ asign.assignment }}</td>
+          <td>{{ asign.date }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

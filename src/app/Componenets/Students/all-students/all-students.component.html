@@ -1,0 +1,70 @@
+<div class="container mt-4">
+  <h1 class="text-center mb-4">عرض جميع الطلاب</h1>
+
+  <div class="input-group mb-4">
+    <a
+      routerLink="/CreateStudent"
+      class="btn btn-success"
+      style="margin-left: 5em; background-color: #918c91"
+      >إضافة طالب</a
+    >
+    <input
+      type="text"
+      placeholder="البحث باسم الطالب"
+      [(ngModel)]="searchTerm"
+      (input)="searchstudents()"
+      class="form-control"
+    />
+  </div>
+
+  <div>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th>الاسم بالكامل</th>
+          <th>اسم ولي الامر</th>
+          <th>البريد الالكتروني</th>
+          <th>رقم الهاتف</th>
+          <th>المرحلة</th>
+          <th>المستوي</th>
+          <th>تاريخ التسجيل</th>
+          <th>تعديل</th>
+          <th>حذف</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let student of filteredStudents
+              | paginate : { itemsPerPage: 10, currentPage: p }
+          "
+        >
+          <td>{{ student.fullName }}</td>
+          <td>{{ student.parent_Name }}</td>
+          <td>{{ student.student_Email }}</td>
+          <td>{{ student.phone_Number }}</td>
+          <td>{{ student.stage }}</td>
+          <td>{{ student.level }}</td>
+          <td>{{ student.enrollmentDate | date : "yyyy-MM-dd" }}</td>
+          <td>
+            <a
+              routerLink="/EditStudent/{{ student.student_Id }}"
+              class="btn btn-sm"
+              style="background-color: #918c91"
+              >تعديل</a
+            >
+          </td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="confirmDelete(student.student_Id)"
+            >
+              حذف
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
