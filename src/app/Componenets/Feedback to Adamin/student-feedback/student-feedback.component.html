@@ -1,0 +1,115 @@
+<div class="container mt-5">
+  <button class="btn btn-secondary mb-3" (click)="goBack()">عودة</button>
+
+  <div class="row justify-content-center d-flex flex-row">
+    <!-- عرض البيانات العامة -->
+    <div class="col-md-5">
+      <div class="card shadow-lg mb-4">
+        <div class="card-body text-center">
+          <h5 class="card-title font-weight-bold">عرض جميع أراء الطلاب</h5>
+          <p class="card-text">عرض جميع أراء الطلاب للمعلمين.</p>
+          <button class="btn btn-primary btn-block" (click)="fetchFeedbackData()">عرض</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- البحث باستخدام المدخلات -->
+     
+    <div class="col-md-5">
+      <div class="card shadow-lg mb-4">
+        <div class="card-body text-center">
+          <h5 class="card-title font-weight-bold">البحث عن أراء الطلاب</h5>
+          <p class="card-text">ابحث حسب الفصل، المرحلة، والمستوى.</p>
+
+          <!-- Search Inputs -->
+          <div class="form-group">
+            <label for="123"> اسم الفصل</label>
+            <br>
+            <br>
+            <input id="123" type="text" class="form-control mb-3" placeholder="اسم الفصل" [(ngModel)]="className">
+            
+            <!-- Stage Input -->
+             <label for="456">المرحلة الدراسية</label>
+             <br>
+             <br>
+             <select id="456" #stage="ngModel" [(ngModel)]="userData.stage" name="stage" required class="form-control mb-2" (change)="updateLevelOptions()">
+              <option value="" disabled selected>المرحلة الدراسية</option>
+              <option value="أبتدائي">الابتدائية</option>
+              <option value="أعدادي">الاعدادية</option>
+              <option value="ثانوي">الثانوية</option>
+            </select>
+            <div *ngIf="stage.invalid && stage.touched" class="text-danger">
+              <small *ngIf="stage.errors?.['required']">المرحلة مطلوبة.</small>
+            </div>
+          </div> 
+        
+          <div class="form-group">
+            <label for="789"> المستوي</label>
+            <br>
+            <br>
+            <select  id="789" #level="ngModel" [(ngModel)]="userData.level" name="level" required class="form-control mb-2">
+              <option value="" disabled selected>اختر المستوى</option>
+              <option *ngFor="let level of availableLevels" [value]="level">{{ level }}</option>
+            </select>
+            <div *ngIf="level.invalid && level.touched" class="text-danger">
+              <small *ngIf="level.errors?.['required']">المستوى مطلوب.</small>
+            </div>
+          </div> 
+          
+          <!-- Search Button -->
+          <button class="btn btn-success btn-block" (click)="searchFeedbacks()">بحث</button>
+
+          <!-- Error Message Display -->
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+            {{ errorMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search by Student Name (Auto-filter) -->
+  <div class="row justify-content-center mt-3">
+    <div class="col-md-8">
+      <div class="input-group mb-3">
+        <input  type="text" class="form-control" placeholder="البحث باسم الطالب" [(ngModel)]="studentName" (ngModelChange)="filterFeedbackByStudentName()">
+      </div>
+<!-- Show message if data is empty -->
+<!-- <div *ngIf="filteredData.length === 0" class="alert alert-warning text-center">
+  لا توجد بيانات متاحة للعرض.
+</div> -->
+
+      <!-- Error if student not found -->
+      <div *ngIf="studentNotFound" class="alert alert-warning">
+        الطالب "{{studentName}}" غير موجود.
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section (will show when data is fetched) -->
+  <div *ngIf="showTable" class="row mt-5 justify-content-center">
+    <div class="col-md-10">
+      <h3 class="text-center mb-4 font-weight-bold">نتائج الأراء</h3>
+      <table class="table table-bordered table-hover shadow-sm">
+        <thead class="thead-dark ">
+          <tr>
+            <th>#</th>
+            <th>اسم الطالب</th>
+            <th>اسم المعلم</th>
+            <th>التقييم</th>
+            <th>التاريخ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let feedback of filteredData; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ feedback.studentName }}</td>
+            <td>{{ feedback.teacherName }}</td>
+            <td>{{ feedback.feedback }}</td>
+            <td>{{ feedback.date | date:"yyyy-MM-dd" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

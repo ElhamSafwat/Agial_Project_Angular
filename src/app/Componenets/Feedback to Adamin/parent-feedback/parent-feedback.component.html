@@ -1,0 +1,104 @@
+<div class="container mt-5">
+  <button class="btn btn-secondary mb-3" (click)="goBack()">عودة</button>
+
+  <div class="row justify-content-center">
+    <!-- عرض البيانات العامة -->
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-lg">
+        <div class="card-body text-center">
+          <h5 class="card-title font-weight-bold">عرض جميع أراء الاباء</h5>
+          <p class="card-text">عرض جميع أراء الاباء للمعلمين.</p>
+          <button class="btn btn-primary btn-block" (click)="fetchFeedbackData()">عرض</button>
+        </div>
+      </div>
+
+      <!-- Error Message for Fetch Data (Displayed below the display section) -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <!-- البحث باستخدام المدخلات -->
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-lg">
+        <div class="card-body text-center">
+          <h5 class="card-title font-weight-bold">البحث عن أراء الاباء</h5>
+          <p class="card-text">ابحث حسب الفصل، المرحلة، والمستوى.</p>
+
+          <!-- Search Inputs -->
+          <div class="form-group">
+            <label for="123">اسم الفصل</label>
+            <input id="123" type="text" class="form-control mb-3" placeholder="اسم الفصل" [(ngModel)]="className">
+          </div>
+
+          <div class="form-group">
+            <label for="456">المرحلة الدراسية</label>
+            <select id="456" #stage="ngModel" [(ngModel)]="userData.stage" name="stage" required class="form-control mb-3" (change)="updateLevelOptions()">
+              <option value="" disabled selected>المرحلة الدراسية</option>
+              <option value="أبتدائي">الابتدائية</option>
+              <option value="أعدادي">الأعدادية</option>
+              <option value="ثانوي">الثانوية</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="789">المستوي</label>
+            <select id="789" #level="ngModel" [(ngModel)]="userData.level" name="level" required class="form-control mb-3">
+              <option value="" disabled selected>اختر المستوى</option>
+              <option *ngFor="let level of availableLevels" [value]="level">{{ level }}</option>
+            </select>
+          </div>
+
+          <!-- Search Button -->
+          <button class="btn btn-success btn-block" (click)="searchFeedbacks()">بحث</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search by Parent Name (Auto-filter) -->
+  <div class="row justify-content-center mt-3">
+    <div class="col-md-8">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="البحث باسم الاب" [(ngModel)]="parentname" (ngModelChange)="filterByParentName()">
+      </div>
+ <!-- Check if feedback data is empty -->
+ <!-- <div *ngIf="filteredFeedbackData.length === 0" class="alert alert-warning text-center">
+  لا توجد بيانات لعرضها.
+</div> -->
+      <!-- Error if parent not found -->
+      <div *ngIf="parentNotFound" class="alert alert-warning">
+        الاب "{{parentname}}" غير موجود.
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section (will show when data is fetched) -->
+  <div *ngIf="showTable" class="row mt-5 justify-content-center">
+    <div class="col-md-10">
+      <h3 class="text-center mb-4 font-weight-bold">نتائج الأراء</h3>
+      <table class="table table-bordered table-hover shadow-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>اسم الطالب</th>
+            <th>اسم المعلم</th>
+            <th>اسم الأب</th>
+            <th>التقييم</th>
+            <th>التاريخ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let feedback of filteredFeedbackData; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ feedback.student_Name }}</td>
+            <td>{{ feedback.teacher_Name }}</td>
+            <td>{{ feedback.parent_Name }}</td>
+            <td>{{ feedback.feedback }}</td>
+            <td>{{ feedback.date | date:"yyyy-MM-dd" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
