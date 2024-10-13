@@ -1,0 +1,40 @@
+<div class="container mt-5">
+    <h2 class="text-center">درجات امتحانات الأبناء</h2>
+  
+  
+    <div class="d-flex align-items-center mb-3 mt-4">
+        <label for="selectson" class="form-label me-3" style="font-size: 1.2rem; flex-basis: 10%;">اختر الابن</label> 
+        <select id="selectson" name="selectson" required class="form-select" style="flex-grow: 1;" (change)="onStudentChange($event)">
+            <option value="">اختر الاسم ...</option>
+            <option *ngFor="let student of students" [value]="student.studentId">{{ student.studentName }}</option>
+        </select>
+    </div>
+  
+  <div *ngIf="degreeExam.length > 0;else noData" class="container mt-4">
+    <h3 class="mt-4"> درجات الابن:  {{ selectedStudentName }}</h3>
+    <table class="table mt-2" >
+      <thead class="table-light">
+        <tr>
+            <td> اسم الماده</td>
+            <td> اسم المدرس</td>
+            <td> تاريخ الامتحان </td>
+            <td> الدرجه </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exam of degreeExam">
+          <td>{{ exam.subjectName }}</td>
+          <td>{{ exam.teacherName }}</td>
+          <td>{{ exam.exam_Date}}</td>
+
+          <td>{{ exam.degree}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noData>
+    <div *ngIf="noDataMessage">
+        <h4 class="text-center mt-4">لا توجد درجات لعرضها.</h4>
+    </div>
+</ng-template>
+</div>

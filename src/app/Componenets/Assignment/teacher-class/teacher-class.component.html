@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="text-center mb-4">
+    <h2 style="margin-top: 1em">كل مجموعات</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-4 mb-3" *ngFor="let item of assignment">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <!-- إضافة text-center هنا -->
+          <h5 class="card-title">اسم المجموعة: {{ item.className }}</h5>
+          <!-- <a routerLink="/add-assignment/{{item.classID}}/students" class="btn btn-primary mt-2">اضافة واجب</a> إضافة mt-2 لزيادة المسافة بين العنوان والزر -->
+          <a
+            [routerLink]="['/add-attendance', item.classid]"
+            class="btn btn-primary mt-2 d-block"
+          >
+            تسجيل الحضور
+          </a>
+          <a
+            [routerLink]="['/add-assignment', item.classid]"
+            class="btn btn-primary mt-2 d-block"
+            >اضافة واجب</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
