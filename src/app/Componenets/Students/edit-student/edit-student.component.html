@@ -1,0 +1,113 @@
+<!-- <div class="container">
+    <h2> تعديل بيانات طالب </h2>
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="fullName">الاسم بالكامل</label>
+            <input type="text" id="fullName" class="form-control" formControlName="fullName" placeholder="Enter full name" required />
+            <div *ngIf="studentForm.get('fullName')?.invalid && studentForm.get('fullName')?.touched" class="error">
+                الاسم بالكامل مطلوب.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="studentEmail">البريد الالكتروني</label>
+            <input type="email" id="studentEmail" class="form-control" formControlName="student_Email" placeholder="Enter email" required />
+            <div *ngIf="studentForm.get('student_Email')?.invalid && studentForm.get('student_Email')?.touched" class="error">
+                يجب إدخال بريد إلكتروني صحيح.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNumber">رقم الهاتف</label>
+            <input type="text" id="phoneNumber" class="form-control" formControlName="phone_Number" placeholder="Enter phone number" required />
+            <div *ngIf="studentForm.get('phone_Number')?.invalid && studentForm.get('phone_Number')?.touched" class="error">
+                رقم الهاتف مطلوب.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="stage">المرحلة الدراسية</label>
+            <select id="stage" class="form-control" formControlName="stage" required>
+                <option value="">اختر المرحلة</option>
+                <option value="أبتدائي">أبتدائي</option>
+                <option value="أعدادي">أعدادي</option>
+                <option value="ثانوي">ثانوي</option>
+            </select>
+            <div *ngIf="studentForm.get('stage')?.invalid && studentForm.get('stage')?.touched" class="error">
+                المرحلة الدراسية مطلوبة.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="level">المستوي</label>
+            <select id="level" class="form-control" formControlName="level" required>
+                <option value="">اختر المستوى</option>
+                <option *ngFor="let level of levels" [value]="level">{{ level }}</option>
+            </select>
+            <div *ngIf="studentForm.get('level')?.invalid && studentForm.get('level')?.touched" class="error">
+                يجب إدخال مستوى صحيح.
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="studentForm.invalid">تعديل طالب</button>
+        <br><br>
+    </form>
+</div> -->
+
+
+<div class="container mt-5" style="max-width: 850px; background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+    <h2 class="text-center mb-4">تعديل بيانات طالب</h2>
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+        <div class="form-group mb-3">
+            <label for="fullName">الاسم بالكامل</label>
+            <input type="text" id="fullName" class="form-control" formControlName="fullName" placeholder="أدخل الاسم بالكامل" required />
+            <div *ngIf="studentForm.get('fullName')?.invalid && studentForm.get('fullName')?.touched" class="text-danger">
+                الاسم بالكامل مطلوب.
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="studentEmail">البريد الالكتروني</label>
+            <input type="email" id="studentEmail" class="form-control" formControlName="student_Email" placeholder="أدخل البريد الالكتروني" required />
+            <div *ngIf="studentForm.get('student_Email')?.invalid && studentForm.get('student_Email')?.touched" class="text-danger">
+                يجب إدخال بريد إلكتروني صحيح.
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="phoneNumber">رقم الهاتف</label>
+            <input type="text" id="phoneNumber" class="form-control" formControlName="phone_Number" placeholder="أدخل رقم الهاتف" required />
+            <div *ngIf="studentForm.get('phone_Number')?.invalid && studentForm.get('phone_Number')?.touched" class="text-danger">
+                رقم الهاتف مطلوب.
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="stage">المرحلة الدراسية</label>
+            <select id="stage" class="form-control" formControlName="stage" required>
+                <option value="">اختر المرحلة</option>
+                <option value="أبتدائي">أبتدائي</option>
+                <option value="أعدادي">أعدادي</option>
+                <option value="ثانوي">ثانوي</option>
+            </select>
+            <div *ngIf="studentForm.get('stage')?.invalid && studentForm.get('stage')?.touched" class="text-danger">
+                المرحلة الدراسية مطلوبة.
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="level">المستوى</label>
+            <select id="level" class="form-control" formControlName="level" required>
+                <option value="">اختر المستوى</option>
+                <option *ngFor="let level of levels" [value]="level">{{ level }}</option>
+            </select>
+            <div *ngIf="studentForm.get('level')?.invalid && studentForm.get('level')?.touched" class="text-danger">
+                يجب إدخال مستوى صحيح.
+            </div>
+        </div>
+        <div class="button-container">
+            <button type="submit"  class="submit-button">حفظ</button>
+        </div>
+    </form>
+</div>
+

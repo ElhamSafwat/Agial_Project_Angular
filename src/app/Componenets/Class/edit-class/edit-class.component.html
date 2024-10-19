@@ -1,0 +1,91 @@
+<div class="container mt-4">
+  <h2 class="text-center">تعديل الفصل</h2>
+
+  <div class="my-4">
+    <h3>الطلاب</h3>
+    <ul class="list-group">
+      <li
+        *ngFor="let student of classData.students"
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
+        {{ student.fullName }}
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="deleteStudent(student.studentID)"
+        >
+          حذف
+        </button>
+      </li>
+    </ul>
+
+    <h4 class="mt-4">إضافة طالب جديد</h4>
+    <div class="input-group mb-3">
+      <select
+        class="custom-select form-controll"
+        [(ngModel)]="selectedStudentId"
+      >
+        <option
+          *ngFor="let student of studentsList"
+          [value]="student.student_id"
+        >
+          {{ student.student_name }}
+        </option>
+      </select>
+      <div class="input-group-append">
+        <button
+          class="btn btn-success"
+          (click)="addStudent()"
+          style="margin-right: 1em"
+        >
+          إضافة طالب
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="my-4">
+    <h3>المدرسين</h3>
+    <ul class="list-group">
+      <li
+        *ngFor="let teacher of classData.teachers"
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
+        {{ teacher.fullName }}
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="deleteTeacher(teacher.teacherID)"
+        >
+          حذف
+        </button>
+      </li>
+    </ul>
+
+    <h4 class="mt-4">إضافة مدرس جديد</h4>
+    <div class="input-group mb-3">
+      <select
+        class="custom-select form-controll"
+        [(ngModel)]="selectedTeacherId"
+      >
+        <option
+          *ngFor="let teacher of teachersList"
+          [value]="teacher.teacher_id"
+        >
+          {{ teacher.teacher_name }}
+        </option>
+      </select>
+      <div class="input-group-append">
+        <button
+          class="btn btn-success"
+          (click)="addTeacher()"
+          style="margin-right: 1em"
+        >
+          إضافة مدرس
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" (click)="edit()" style="margin: auto">
+    تعديل
+  </button>
+</div>

@@ -1,0 +1,207 @@
+<div class="container" style="margin-top: 2em">
+  <h3 class="text-center"> اضافه معلم</h3>
+  <form #userForm="ngForm">
+    <!-- User Name Input -->
+    <label for="userName">إسم المستخدم</label>
+    <input
+      #userName="ngModel"
+      [(ngModel)]="userData.userName"
+      name="userName"
+      required
+      minlength="3"
+      type="text"
+      id="userName"
+      class="form-control mb-2"
+      pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$"
+    />
+    <div *ngIf="userName.invalid && userName.touched" class="text-danger">
+      <small *ngIf="userName.errors?.['required']"
+        >يجب إدخال إسم المستخدم.</small
+      >
+      <small *ngIf="userName.errors?.['minlength']"
+        >يجب أن يكون إسم المستخدم 3 حروف على الأقل.</small
+      >
+      <small *ngIf="userName.errors?.['pattern']"
+        >يجب أن يحتوي إسم المستخدم على أحرف وأرقام إنجليزية.</small
+      >
+    </div>
+
+    <!-- Full Name Input -->
+    <label for="fullName">الإسم الكامل</label>
+    <input
+      #fullName="ngModel"
+      [(ngModel)]="userData.full_Name"
+      name="fullName"
+      required
+      minlength="3"
+      type="text"
+      id="fullName"
+      class="form-control mb-2"
+    />
+    <div *ngIf="fullName.invalid && fullName.touched" class="text-danger">
+      <small *ngIf="fullName.errors?.['required']"
+        >يجب إدخال الإسم الكامل.</small
+      >
+      <small *ngIf="fullName.errors?.['minlength']"
+        >يجب أن يكون الإسم الكامل 3 حروف على الأقل.</small
+      >
+    </div>
+
+    <!-- Password Input -->
+    <label for="password">كلمة المرور</label>
+    <input
+      #password="ngModel"
+      [(ngModel)]="userData.password"
+      name="password"
+      required
+      minlength="6"
+      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).*$"
+      type="password"
+      id="password"
+      class="form-control mb-2"
+    />
+    <div *ngIf="password.invalid && password.touched" class="text-danger">
+      <small *ngIf="password.errors?.['required']"
+        >يجب إدخال كلمة المرور.</small
+      >
+      <small *ngIf="password.errors?.['minlength']"
+        >يجب أن تكون كلمة المرور 6 حروف على الأقل.</small
+      >
+      <small *ngIf="password.errors?.['pattern']"
+        >يجب أن تحتوي كلمة المرور على حرف صغير (مثل 'a')، وحرف كبير (مثل 'A')،
+        وحرف غير أبجدي (مثل '#').</small
+      >
+    </div>
+
+    <!-- Confirm Password Input -->
+    <label for="confirmPassword">تأكيد كلمة المرور</label>
+    <input
+      #confirmPassword="ngModel"
+      [(ngModel)]="userData.confirmPassword"
+      name="confirmPassword"
+      required
+      type="password"
+      id="confirmPassword"
+      class="form-control mb-2"
+    />
+    <div
+      *ngIf="confirmPassword.invalid && confirmPassword.touched"
+      class="text-danger"
+    >
+      <small *ngIf="confirmPassword.errors?.['required']"
+        >يجب تأكيد كلمة المرور.</small
+      >
+    </div>
+    <div
+      *ngIf="
+        password.value !== confirmPassword.value && confirmPassword.touched
+      "
+      class="text-danger"
+    >
+      كلمات المرور غير متطابقة.
+    </div>
+
+    <!-- Email Input -->
+    <label for="email">الإيميل</label>
+    <input
+      #email="ngModel"
+      [(ngModel)]="userData.email"
+      name="email"
+      required
+      type="email"
+      id="email"
+      class="form-control mb-2"
+    />
+    <div *ngIf="email.invalid && email.touched" class="text-danger">
+      <small *ngIf="email.errors?.['required']">يجب إدخال الإيميل.</small>
+      <small *ngIf="email.errors?.['email']"
+        >يرجى إدخال عنوان إيميل صالح.</small
+      >
+    </div>
+
+    <!-- Phone Input -->
+    <label for="phone">الهاتف</label>
+    <input
+      #phone="ngModel"
+      [(ngModel)]="userData.phone"
+      name="phone"
+      required
+      minlength="10"
+      maxlength="15"
+      type="tel"
+      id="phone"
+      class="form-control mb-2 phone-input"
+    />
+    <div *ngIf="phone.invalid && phone.touched" class="text-danger">
+      <small *ngIf="phone.errors?.['required']">رقم الهاتف مطلوب.</small>
+      <small *ngIf="phone.errors?.['minlength']"
+        >يجب أن يكون رقم الهاتف 10 أرقام على الأقل.</small
+      >
+      <small *ngIf="phone.errors?.['maxlength']"
+        >يجب أن يكون رقم الهاتف 15 رقماً على الأكثر.</small
+      >
+    </div>
+
+    <!-- Stage Input -->
+    <label for="stage">المرحلة الدراسية</label>
+    <select
+      #stage="ngModel"
+      [(ngModel)]="userData.stage"
+      name="stage"
+      required
+      id="stage"
+      class="form-control mb-2"
+    >
+      <option value="" disabled selected>المرحلة الدراسية</option>
+      <option value="أبتدائي">أبتدائي</option>
+      <option value="أعدادي">أعدادي</option>
+      <option value="ثانوي">ثانوي</option>
+    </select>
+    <div *ngIf="stage.invalid && stage.touched" class="text-danger">
+      <small *ngIf="stage.errors?.['required']">المرحلة مطلوبة.</small>
+    </div>
+
+    <!-- Subject Input -->
+    <label for="subjectId">المادة</label>
+    <select
+      #subjectId="ngModel"
+      [(ngModel)]="userData.subject_ID"
+      name="subjectId"
+      required
+      id="subjectId"
+      class="form-control mb-2"
+    >
+      <option value="" disabled selected>المادة</option>
+      <option *ngFor="let subject of subject" [value]="subject.id">
+        {{ subject.subject_Name }}
+      </option>
+    </select>
+    <div *ngIf="subjectId.invalid && subjectId.touched" class="text-danger">
+      <small *ngIf="subjectId.errors?.['required']">المادة مطلوبة.</small>
+    </div>
+
+    <!-- Hire Date Input -->
+    <label for="hireDate">تاريخ التوظيف</label>
+    <input
+      #hireDate="ngModel"
+      [(ngModel)]="userData.hireDate"
+      name="hireDate"
+      required
+      type="date"
+      id="hireDate"
+      class="form-control mb-2"
+    />
+    <div *ngIf="hireDate.invalid && hireDate.touched" class="text-danger">
+      <small *ngIf="hireDate.errors?.['required']">تاريخ التوظيف مطلوب.</small>
+    </div>
+
+    <!-- Submit Button -->
+    <input
+      (click)="AddTeacher(userData)"
+      [disabled]="userForm.invalid"
+      type="button"
+      value="إضافة"
+      class="btn btn-success"
+    />
+  </form>
+</div>

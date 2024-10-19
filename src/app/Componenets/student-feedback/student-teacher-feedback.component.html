@@ -1,0 +1,141 @@
+<div class="container-fluid d-flex flex-column">
+  <!-- زر العودة في الزاوية العلوية اليسرى -->
+  <div class="d-flex justify-content-end mt-5 mr-3">
+    <button class="btn btn-secondary" (click)="goBack()">عودة</button>
+  </div>
+
+  <div class="row justify-content-center align-items-start mt-5 flex-grow-1">
+    <!-- عرض البيانات العامة -->
+    <div class="col-md-5 d-flex justify-content-center">
+      <div
+        class="card shadow-lg mb-4"
+        style="
+          background-color: rgba(245, 237, 127, 0.404);
+          border-radius: 15px;
+          transition: transform 0.2s;
+        "
+      >
+        <div class="card-body text-center">
+          <h5 class="card-title font-weight-bold">عرض جميع أراء الطلاب</h5>
+          <p class="card-text">عرض جميع أراء الطلاب للمعلمين.</p>
+          <button
+            class="btn btn-outline-dark btn-block"
+            (click)="fetchFeedbackData()"
+            style="border-radius: 10px; transition: background-color 0.3s"
+          >
+            عرض
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- إضافة فيدباك -->
+    <div class="col-md-5 d-flex justify-content-center">
+      <div
+        class="card shadow-lg mb-4"
+        style="
+          background-color: rgba(245, 237, 127, 0.404);
+          border-radius: 15px;
+          transition: transform 0.2s;
+        "
+      >
+        <div class="card-body text-center">
+          <h5 class="card-title font-weight-bold">اضافة الأراء</h5>
+          <p class="card-text">اضافة أراء جديد للمعلمين.</p>
+          <a
+            class="btn btn-outline-dark btn-block"
+            [routerLink]="['/add-feedback-Student']"
+            style="border-radius: 10px; transition: background-color 0.3s"
+            >اضافة</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading spinner -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center mt-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Table Section (will show when data is fetched) -->
+  <div
+    *ngIf="showTable && !isLoading"
+    class="row mt-5 justify-content-center w-100"
+  >
+    <div class="col-md-10">
+      <h3 class="text-center mb-4 font-weight-bold text-dark">نتائج الأراء</h3>
+      <table
+        class="table table-bordered table-hover shadow-sm"
+        style="border-radius: 10px; overflow: hidden"
+      >
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>اسم الطالب</th>
+            <th>اسم المعلم</th>
+            <th>التقييم</th>
+            <th>التاريخ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let feedback of filteredData; let i = index"
+            [ngClass]="{ 'bg-light': i % 2 === 0, 'bg-white': i % 2 !== 0 }"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ feedback.studentName }}</td>
+            <td>{{ feedback.teacherName }}</td>
+            <td>{{ feedback.feedback }}</td>
+            <td>{{ feedback.date | date : "yyyy-MM-dd" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* تحسين تأثير الحركة للكروت */
+  .card:hover {
+    transform: scale(1.05); /* تكبير الكارت عند التمرير عليه */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  /* تأثير الزر عند التمرير عليه */
+  .btn-outline-dark:hover {
+    background-color: hwb(323 9% 14%); /* لون أغمق عند التمرير */
+  }
+
+  /* تنسيق الجدول */
+  table {
+    border-collapse: collapse;
+  }
+
+  th {
+    background-color: #343a40; /* لون خلفية الترويسة */
+    color: white; /* لون النص */
+  }
+
+  /* إعدادات الألوان المختلفة للصفوف */
+  .bg-light {
+    background-color: #f8f9fa !important; /* لون خلفية الصف الأول */
+  }
+
+  .bg-white {
+    background-color: #ffffff !important; /* لون خلفية الصف الثاني */
+  }
+
+  tbody tr:hover {
+    background-color: #d8dbb0; /* لون خلفية الصف عند التمرير */
+  }
+
+  /* إعداد الكروت لتكون في المنتصف */
+  .card {
+    width: 100%; /* عرض الكارت بالكامل */
+    max-width: 500px; /* تحديد الحد الأقصى لعرض الكارت */
+    margin: 0 auto; /* لتوسيط الكروت */
+  }
+</style>

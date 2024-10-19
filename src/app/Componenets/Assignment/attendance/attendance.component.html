@@ -1,0 +1,66 @@
+<div class="container mt-5">
+  <form
+    (ngSubmit)="onSubmit()"
+    class="bg-light p-4 rounded shadow-sm mx-auto"
+    style="max-width: 600px"
+  >
+    <h2 class="text-center mb-4">تسجيل الحضور</h2>
+
+    <!-- <div class="mb-3">
+      <label for="sessionDate" class="form-label">تاريخ الحصة</label>
+      <input
+        type="text"
+        id="sessionDate"
+        class="form-control"
+        [(ngModel)]="sessionDate"
+        name="sessionDate"
+        required
+      />
+    </div> -->
+
+    <div class="mb-3">
+      <label for="sessionTime" class="form-label">وقت البدء</label>
+      <input
+        type="text"
+        id="sessionTime"
+        class="form-control"
+        [(ngModel)]="sessionTime"
+        name="sessionTime"
+        required
+      />
+    </div>
+
+    <div style="display: flex" class="mb-3">
+      <h4 class="mt-4">الطلاب في المجموعة</h4>
+      <button
+        type="submit"
+        class="btn btn-success mt-3"
+        style="margin-right: 11em; height: 3em"
+      >
+        تسجيل الحضور
+      </button>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>اسم الطالب</th>
+          <th>حضور</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students">
+          <td>{{ student.fullName }}</td>
+          <td>
+            <input
+              type="checkbox"
+              [(ngModel)]="student.attendance"
+              (change)="onAttendanceChange(student)"
+              name="present-{{ student.userID }}"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>

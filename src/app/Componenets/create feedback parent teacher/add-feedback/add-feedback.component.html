@@ -1,0 +1,89 @@
+<div class="container mt-4">
+  <h2 class="text-center">إضافه رأي</h2>
+
+  <form
+    (ngSubmit)="AddFeedback(feedback)"
+    class="needs-validation"
+    novalidate
+    #feedbackForm="ngForm"
+  >
+    <div class="mb-3">
+      <label for="student" class="form-label">اختر الطالب:</label>
+      <select
+        id="student"
+        [(ngModel)]="feedback.student_ID"
+        name="student_ID"
+        required
+        (change)="onStudentChange(feedback.student_ID)"
+        class="form-select"
+        #studentID="ngModel"
+      >
+        <option value="" disabled selected>اختر طالب</option>
+        <option
+          *ngFor="let student of Studentfromparent"
+          [value]="student.studentId"
+        >
+          {{ student.studentName }}
+        </option>
+      </select>
+      <div
+        *ngIf="studentID.invalid && studentID.touched"
+        class="invalid-feedback"
+      >
+        يرجى اختيار طالب.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="teacher" class="form-label">اختر المعلم:</label>
+      <select
+        id="teacher"
+        [(ngModel)]="feedback.teacher_ID"
+        name="teacher_ID"
+        required
+        class="form-select"
+        #teacherID="ngModel"
+      >
+        <option value="" disabled selected>اختر معلم</option>
+        <option
+          *ngFor="let teacher of Teacherstudent"
+          [value]="teacher.teacherId"
+        >
+          {{ teacher.teacherName }}
+        </option>
+      </select>
+      <div
+        *ngIf="teacherID.invalid && teacherID.touched"
+        class="invalid-feedback"
+      >
+        يرجى اختيار معلم.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="feedback" class="form-label">ملاحظات:</label>
+      <textarea
+        id="feedback"
+        [(ngModel)]="feedback.feedBack"
+        name="feedBack"
+        required
+        class="form-control"
+        #feedbackText="ngModel"
+      ></textarea>
+      <div
+        *ngIf="feedbackText.invalid && feedbackText.touched"
+        class="invalid-feedback"
+      >
+        يرجى إدخال ملاحظاتك.
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="feedbackForm.invalid"
+    >
+      إرسال الرأي
+    </button>
+  </form>
+</div>

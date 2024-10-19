@@ -1,0 +1,19 @@
+.btnStyle {
+    background-color: white; 
+    border: 2px solid #dde1e6; 
+    color: black;             
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    /* width: 100%; */
+    font-weight: bold;      
+    transition: color 0.3s;  
+    -webkit-appearance: button; 
+    -moz-appearance: button;
+    appearance: button;
+  }
+
+  .btnStyle:hover {
+    background-color: #b634b6;    
+    transition: .7s;
+  }

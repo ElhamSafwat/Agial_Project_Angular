@@ -1,0 +1,29 @@
+
+<div class="container mt-5">
+    <h2>تعديل الماده</h2>
+    <form (ngSubmit)="onUpdate()" #updateSubjectForm="ngForm">
+      <div class="form-group">
+        <label for="subjectName" class="fw-bold fs-5">أسم الماده</label>
+        <input
+          type="text"
+          id="subjectName"
+          class="form-control"
+          [(ngModel)]="subjectName"
+          name="subjectName"
+          required
+        />
+      </div>
+      <div class="form-group mt-3 ">
+        <label for="description" class="fw-bold fs-5">المواصفات</label>
+        <textarea
+          id="description"
+          class="form-control"
+          [(ngModel)]="description"
+          name="description"
+          required
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">Update</button>
+    </form>
+  </div>
+  

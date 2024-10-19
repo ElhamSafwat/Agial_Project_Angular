@@ -1,0 +1,126 @@
+<div class="container mt-4">
+  <h2 class="text-center">أرسال الراى لاولياء الامور</h2>
+  <div class="mb-3">
+    <label for="studentSelect" class="form-label">أختار الطالب:</label>
+    <select
+      id="studentSelect"
+      class="form-select"
+      [(ngModel)]="selectedStudentId"
+      (change)="onStudentSelect(selectedStudentId)"
+    >
+      <option value="" disabled>حدد الطالب</option>
+      <optgroup *ngFor="let class of studentsData" [label]="class.className">
+        <ng-container *ngFor="let parent of class.parentsWithStudents">
+          <option
+            *ngFor="let student of parent.students"
+            [value]="student.studentId"
+          >
+            (أسم الطالب: {{ student.studentName }}) (أسم ولى الامر:
+            {{ parent.parentName }})
+          </option>
+        </ng-container>
+      </optgroup>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="feedbackText" class="form-label"
+      >اعطاء رايك لهذا الطالب لولى أمره:</label
+    >
+    <textarea
+      id="feedbackText"
+      class="form-control"
+      [(ngModel)]="teacherFeedback"
+      rows="4"
+      (input)="onFeedbackChange()"
+    ></textarea>
+  </div>
+
+  <div class="mb-3 d-flex justify-content-between align-items-center">
+    <button
+      class="btn btnStyle"
+      (click)="submitFeedback()"
+      [disabled]="isLoading"
+    >
+      أرسال الراى
+    </button>
+
+    <div class="feedback-messages d-flex align-items-center ms-3">
+      <div *ngIf="errorMessage" class="alert alert-danger mb-0 ms-2">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="isLoading" class="d-flex justify-content-center ms-2">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">جاري التحميل...</span>
+        </div>
+      </div>
+
+      <div *ngIf="successMessage" class="alert alert-success mb-0 ms-2">
+        {{ successMessage }}
+      </div>
+    </div>
+  </div>
+  <input
+    *ngIf="!showFeedbackTable"
+    type="button"
+    class="btn btnStyle text-center mx-auto d-block"
+    value="عرض الأراء مستلمه"
+    (click)="loadFeedback()"
+  />
+
+  <div *ngIf="showFeedbackTable" class="feedback-table mt-4">
+    <button class="btn btn-danger btn-sm mb-2" (click)="closeFeedbackTable()">
+      إغلاق
+    </button>
+    <div class="container my-3">
+      <div class="row">
+        <div class="col-lg-4">
+          <input
+            class="form-control text-center"
+            type="search"
+            [(ngModel)]="searchParentName"
+            (input)="filterFeedback()"
+            placeholder="بحث باسم ولى الامر"
+          />
+        </div>
+        <div class="col-lg-4">
+          <input
+            class="form-control text-center"
+            type="search"
+            [(ngModel)]="searchStudentName"
+            (input)="filterFeedback()"
+            placeholder="بحث باسم الطالب"
+          />
+        </div>
+        <div class="col-lg-4">
+          <input
+            class="form-control text-center"
+            type="date"
+            [(ngModel)]="searchDate"
+            (input)="filterFeedback()"
+            placeholder="بحث بالتاريخ"
+          />
+        </div>
+      </div>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>اسم ولي الأمر</th>
+          <th>اسم الطالب</th>
+          <th>التاريخ</th>
+          <th>الرأي</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let feedback of filteredFeedbackData">
+          <td>{{ feedback.parentName }}</td>
+          <td>{{ feedback.studentName }}</td>
+          <td>{{ feedback.date | date : "dd/MM/yyyy" }}</td>
+          <td>{{ feedback.feedBack }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

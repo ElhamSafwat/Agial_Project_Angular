@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-light Color_Header">
+  <div class="container-fluid">
+    <a class="navbar-brand mx-5" routerLink="/Home">
+      <img src="Images/Logo.png" alt="Logo" class="logo" />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 mx-5">
+        <li class="nav-item">
+          <a
+            class="nav-link active WordRaesy"
+            aria-current="page"
+            routerLink="{{ myroute }}"
+            >الصفحه الرئيسيه</a
+          >
+        </li>
+      </ul>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <div
+            *ngIf="getlogin(); else loginTemplate"
+            class="user-info d-flex align-items-center"
+          >
+            <a routerLink="/profile">
+              <img
+                src="Images/profile.png"
+                class="rounded-circle user-image"
+                width="50 em"
+                style="margin-left: 1em"
+            /></a>
+            <span class="user-name" style="margin-left: 2em">{{
+              userlogin
+            }}</span>
+            <button class="btn btn-danger ms-2" (click)="logout()">
+              تسجيل الخروج
+            </button>
+          </div>
+
+          <!-- Login button template if not logged in -->
+          <ng-template #loginTemplate>
+            <button class="btn btn-primary" routerLink="/Login">
+              تسجيل دخول
+            </button>
+          </ng-template>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

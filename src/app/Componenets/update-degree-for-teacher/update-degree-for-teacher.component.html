@@ -1,0 +1,13 @@
+<div class="container mt-5">
+    <h3 class="text-center my-4">اسم الطالب: {{StudentName}}</h3>
+    
+    <div class="form-group w-25 mx-auto text-center py-3">
+        <label for="degree" class="py-2 fs-4">الدرجه:</label>
+        <input type="number" id="degree" class="form-control" [(ngModel)]="degree" (input)="clearMessage()" />
+        <div *ngIf="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</div>
+    </div>
+    
+    <div class="text-center mt-3">
+        <button class="system-btn" (click)="updateDegree()">تعديل الدرجة</button>
+    </div>
+</div>

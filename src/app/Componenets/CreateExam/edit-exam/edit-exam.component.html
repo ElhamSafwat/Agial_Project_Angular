@@ -1,0 +1,128 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-2">تعديل الامتحان</h2>
+
+  <form #examForm="ngForm" (ngSubmit)="onUpdate()" novalidate>
+    <!-- Exam Date -->
+    <div class="form-group">
+      <label for="exam_Date">تاريخ الامتحان:</label>
+      <input
+        type="date"
+        id="exam_Date"
+        [(ngModel)]="userData.exam_Date"
+        name="exam_Date"
+        class="form-control"
+        required
+        #examDate="ngModel"
+      />
+      <div *ngIf="examDate.invalid && examDate.touched" class="text-danger">
+        يرجى إدخال تاريخ الامتحان.
+      </div>
+    </div>
+
+    <!-- Start Time -->
+    <div class="form-group">
+      <label for="start_Time">وقت البدء:</label>
+      <input
+        type="number"
+        id="start_Time"
+        [(ngModel)]="userData.start_Time"
+        name="start_Time"
+        class="form-control"
+        min="1"
+        max="23"
+        required
+        #startTime="ngModel"
+      />
+      <div *ngIf="startTime.invalid && startTime.touched" class="text-danger">
+        يرجى إدخال وقت البدء بين 1 و 23.
+      </div>
+    </div>
+
+    <!-- End Time -->
+    <div class="form-group">
+      <label for="end_Time">وقت الانتهاء:</label>
+      <input
+        type="number"
+        id="end_Time"
+        [(ngModel)]="userData.end_Time"
+        name="end_Time"
+        class="form-control"
+        min="1"
+        max="23"
+        required
+        #endTime="ngModel"
+      />
+    </div>
+
+    <!-- Minimum Degree -->
+    <div class="form-group">
+      <label for="min_Degree">الحد الأدنى للدرجات:</label>
+      <input
+        type="number"
+        id="min_Degree"
+        [(ngModel)]="userData.min_Degree"
+        name="min_Degree"
+        class="form-control"
+        min="1"
+        required
+        #minDegree="ngModel"
+      />
+    </div>
+
+    <!-- Maximum Degree -->
+    <div class="form-group">
+      <label for="max_Degree">الحد الأقصى للدرجات:</label>
+      <input
+        type="number"
+        id="max_Degree"
+        [(ngModel)]="userData.max_Degree"
+        name="max_Degree"
+        class="form-control"
+        min="1"
+        required
+        #maxDegree="ngModel"
+      />
+      <div *ngIf="maxDegree.invalid && maxDegree.touched" class="text-danger">
+        يرجى إدخال الحد الأقصى للدرجات (يجب أن تكون قيمة موجبة).
+      </div>
+      <div
+        *ngIf="userData.max_Degree <= userData.min_Degree && maxDegree.touched"
+        class="text-danger"
+      >
+        يجب أن يكون الحد الأقصى أكبر من الحد الأدنى.
+      </div>
+    </div>
+
+    <!-- Class Select -->
+    <div class="form-group">
+      <label for="classSelect">اختر الصف:</label>
+      <select
+        id="classSelect"
+        class="form-control"
+        [(ngModel)]="selectedClass"
+        name="className"
+        required
+        #className="ngModel"
+      >
+        <option *ngFor="let class of classes" [value]="class">
+          {{ class }}
+        </option>
+      </select>
+      <div *ngIf="className.invalid && className.touched" class="text-danger">
+        يرجى اختيار الصف.
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="btn btn-primary mt-3"
+      [disabled]="examForm.invalid"
+    >
+      تحديث الامتحان
+    </button>
+    <a routerLink="/" class="btn btn-secondary mt-3" style="margin-right: 10px"
+      >إلغاء</a
+    >
+  </form>
+</div>

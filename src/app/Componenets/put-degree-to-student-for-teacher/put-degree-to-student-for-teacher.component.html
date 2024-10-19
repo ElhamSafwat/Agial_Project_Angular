@@ -1,0 +1,93 @@
+<div class="container mt-4">
+  <h3 class="text-center">إدخال درجات الطلاب</h3>
+  <div class="mb-3">
+    <label for="dateInput" class="form-label">أدخل تاريخ الامتحان لظهور تفاصيل الامتحان:</label>
+    <input type="date" id="dateInput" class="form-control" [(ngModel)]="selectedDate" (change)="getExamDetails()" (input)="clearErrorMessage()">
+  </div>
+  <div class="container">
+    <div *ngIf="noExamMessage" class="alert alert-warning w-25 mx-auto">{{ noExamMessage }}</div>
+
+    <div *ngIf="selectedDate && !noExamMessage" class="row mt-3 text-center">
+      <div class="col-lg-4">
+        <p class="btn btn-danger rounded-3 text-light"><strong>أقل درجه:</strong> {{ minDegree }}</p>
+      </div>
+      <div class="col-lg-4">
+        <p class="btn btn-success rounded-3 text-light"><strong>أكبر درجه:</strong> {{ maxDegree }}</p>
+      </div>
+      <div class="col-lg-4">
+        <p class="btn btn-light rounded-3 text-dark"><strong>أسم الماده:</strong> {{ subjectName }}</p>
+      </div>
+    </div>
+
+    <!-- Select Class -->
+    <div class="mb-3">
+      <label for="classSelect" class="form-label">اختر الفصل لظهور الطلاب:</label>
+      <select id="classSelect" class="form-select" [(ngModel)]="selectedClassId" (change)="getStudentsByClass()">
+        <option value="" disabled selected>حدد الفصل</option>
+        <option *ngFor="let classItem of classDataByTeacherID" [value]="classItem.classId">
+          {{ classItem.className }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3" *ngIf="studentsByClassID && studentsByClassID.length > 0">
+      <div class="row g-3">
+        <div *ngFor="let student of studentsByClassID" class="col-12 col-md-6 col-lg-4">
+          <div class="d-flex align-items-center mb-3">
+            <label class="me-2">{{ student.fullName }}</label>
+            <input type="number" class="form-control mx-2" placeholder="أدخل الدرجة" [(ngModel)]="student.degree" (input)="clearErrorMessage()" />
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <button class="btn BtnStyle mx-auto d-block" (click)="insertAllDegrees()">إدخال جميع الدرجات</button>
+    <div class="mt-2">
+      <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    </div>
+  </div>
+
+  <!-- Part 2 Of Task -->
+  <div class="mb-3 container my-2">
+    <label for="dateInputAnother" class="form-label">أدخل تاريخ الامتحان لظهور تفاصيل درجات الطلاب:</label>
+    <input type="date" id="dateInputAnother" class="form-control" [(ngModel)]="selectedAnotherDate" (change)="onAnotherDateChange()" (input)="clearErrorMessage()">
+    <div *ngIf="anotherDateErrorMessage" class="alert alert-warning w-25 mx-auto mt-2">{{ anotherDateErrorMessage }}</div>
+    
+    <div class="my-3" *ngIf="!anotherDateErrorMessage && selectedAnotherDate">
+      <button class="btn btn-outline-danger ms-2" (click)="clearDateAndData()">اغلاق</button>
+      <h4 class="text-center">تفاصيل درجات الطلاب:</h4>
+      <input class="form-control text-center w-25 my-4 mx-auto" type="search" placeholder="أبحث بأسم الطالب" [(ngModel)]="searchTerm" (input)="onSearch()" />
+      <div *ngIf="studentNotFoundMessage" class="alert alert-warning w-50 mx-auto mt-2">{{ studentNotFoundMessage }}</div>
+      <table class="table table-striped text-center">
+        <thead>
+          <tr>
+            <th>اسم الطالب</th>
+            <th>الدرجة</th>
+            <th>الدرجة القصوى</th>
+            <th>الحد الادنى</th>
+            <th>اسم المادة</th>
+            <th>رقم تليفون ولى الامر</th>
+            <th>الحالة</th>
+            <th>تعديل درجه الطالب</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let studentExam of filteredStudentExams">
+            <td>{{ studentExam.studentName }}</td>
+            <td>{{ studentExam.degree }}</td>
+            <td>{{ studentExam.maxDegree }}</td>
+            <td>{{ studentExam.minDegree }}</td>
+            <td>{{ studentExam.subjectName }}</td>
+            <td>{{ studentExam.parentPhone }}</td>
+            <td>{{ studentExam.status }}</td>
+            <td>
+              <input type="button" class="btn btn-outline-primary" value="تعديل" 
+                routerLink="/UpdateDegreeForTeacher/{{studentExam.examID}}/{{studentExam.studentID}}/{{staticExamResult.teacher_Id}}"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
