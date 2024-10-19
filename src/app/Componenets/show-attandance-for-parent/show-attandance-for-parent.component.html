@@ -1,0 +1,69 @@
+<h2 class="text-center mt-3">سجل حضور وغياب الأبناء</h2>
+
+<div class="d-flex align-items-center mb-3 mt-4">
+  <label
+    for="selectson"
+    class="form-label me-3"
+    style="font-size: 1.2rem; flex-basis: 10%"
+    >اختر الابن</label
+  >
+  <!-- <select
+    id="selectson"
+    name="selectson"
+    required
+    class="form-select"
+    style="flex-grow: 1"
+    (change)="onStudentChange($event)"
+  >
+    <option value="">اختر الاسم ...</option>
+    <option *ngFor="let student of students" [value]="student.studentId">
+      {{ student.studentName }}
+    </option>
+  </select> -->
+  <select
+    id="selectson"
+    name="selectson"
+    required
+    class="form-select"
+    style="width: 300px; font-size: 14px"
+    (change)="onStudentChange($event)"
+  >
+    <option value="">اختر الاسم ...</option>
+    <option *ngFor="let student of students" [value]="student.studentId">
+      {{ student.studentName }}
+    </option>
+      
+  </select>
+</div>
+
+<div *ngIf="attendance.length > 0; else noData" class="container mt-4">
+  <h3 class="mt-4">حضور الابن: {{ selectedStudentName }}</h3>
+  <table class="table mt-2">
+    <thead class="table-light">
+      <tr>
+        <th>المجموعة</th>
+        <th>اسم المدرس</th>
+        <th>اسم المادة</th>
+        <th>التاريخ</th>
+        <th>الحالة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let sess of attendance"
+        [ngClass]="{ 'table-danger': sess.attendance === 'غائب' }"
+      >
+        <td>{{ sess.className }}</td>
+        <td>{{ sess.teachername }}</td>
+        <td>{{ sess.session_name }}</td>
+        <td>{{ sess.date }}</td>
+        <td>{{ sess.attendance }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #noData>
+  <div *ngIf="noDataMessage">
+    <h4 class="text-center mt-4">لا يوجد بيانات حضور بعد لعرضها</h4>
+  </div>
+</ng-template>

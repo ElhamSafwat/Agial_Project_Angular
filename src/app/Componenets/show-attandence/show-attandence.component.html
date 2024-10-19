@@ -1,0 +1,243 @@
+<div class="container mt-5">
+  <div class="row">
+    <!-- الفورم الأول -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center">بحث حضور يوم معين مجموعه معينه</h5>
+          <form [formGroup]="myform" (ngSubmit)="search_byclass()">
+            <div class="form-group">
+              <label for="input1">اسم مجموعة</label>
+              <input
+                type="text"
+                class="form-control"
+                id="input1"
+                placeholder="أدخل اسم مجموعة"
+                formControlName="classname"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="stage">المرحلة:</label>
+              <select
+                class="form-control"
+                id="stage"
+                formControlName="student_stage"
+                required
+              >
+                <option value="أبتدائي">المرحلة الابتدائية</option>
+                <option value="أعدادي">المرحلة الإعدادية</option>
+                <option value="ثانوي">المرحلة الثانوية</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="level">المستوى:</label>
+              <select
+                class="form-control"
+                id="level"
+                formControlName="student_level"
+                required
+              >
+                <option value="1">المستوى 1</option>
+                <option value="2">المستوى 2</option>
+                <option value="3">المستوى 3</option>
+                <option
+                  *ngIf="
+                    myform.controls['student_stage'].value !== 'ثانوي' &&
+                    myform.controls['student_stage'].value !== 'أعدادي'
+                  "
+                  value="4"
+                >
+                  المستوى 4
+                </option>
+                <option
+                  *ngIf="
+                    myform.controls['student_stage'].value !== 'ثانوي' &&
+                    myform.controls['student_stage'].value !== 'أعدادي'
+                  "
+                  value="5"
+                >
+                  المستوى 5
+                </option>
+                <option
+                  *ngIf="
+                    myform.controls['student_stage'].value !== 'ثانوي' &&
+                    myform.controls['student_stage'].value !== 'أعدادي'
+                  "
+                  value="6"
+                >
+                  المستوى 6
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="input4">تاريخ الحصة</label>
+              <input
+                type="date"
+                class="form-control"
+                id="input4"
+                placeholder="أدخل تاريخ الحصة"
+                formControlName="date"
+              />
+            </div>
+
+            <!-- زر البحث -->
+            <button type="submit" class="btn btn-primary btn-block mt-3">
+              بحث
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- الفورم الثاني -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center">
+            عرض جدول حضور كل مجموعات بين فتره معينة
+          </h5>
+          <form [formGroup]="myformdate" (ngSubmit)="search_bydate()">
+            <div class="form-group">
+              <label for="input5">تاريخ من</label>
+              <input
+                type="date"
+                class="form-control"
+                id="input5"
+                placeholder="أدخل تاريخ البداية"
+                formControlName="datefrom"
+              />
+            </div>
+            <div class="form-group">
+              <label for="input6">تاريخ حتى</label>
+              <input
+                type="date"
+                class="form-control"
+                id="input6"
+                placeholder="أدخل تاريخ النهاية"
+                formControlName="dateto"
+              />
+            </div>
+
+            <!-- زر البحث -->
+            <button type="submit" class="btn btn-primary btn-block mt-3">
+              بحث
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- زر عرض جدول الحضور -->
+    <div class="col-md-4 text-center align-self-center">
+      <button class="btn" (click)="showAll()" style="background-color:  #3468b6;color: white;">عرض جدول حضور</button>
+    </div>
+  </div>
+
+  <!-- الجدول -->
+  <div *ngIf="isLoading" class="spinner">جاري التحميل...</div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <!-- الحقل الأول -->
+      <div class="col-md-3">
+        <div class="form-group mb-3">
+          <label for="input1"> اسم مجموعه</label>
+          <input
+            type="text"
+            class="form-control"
+            id="input1"
+            [(ngModel)]="input1Value"
+            (input)="onInput1Change()"
+            placeholder="أدخل قيمة"
+          />
+        </div>
+      </div>
+
+      <!-- الحقل الثاني -->
+      <div class="col-md-3">
+        <div class="form-group mb-3">
+          <label for="input2">اسم معلم </label>
+          <input
+            type="text"
+            class="form-control"
+            id="input2"
+            [(ngModel)]="input2Value"
+            (input)="onInput2Change()"
+            placeholder="أدخل قيمة"
+          />
+        </div>
+      </div>
+
+      <!-- الحقل الثالث -->
+      <div class="col-md-3">
+        <div class="form-group mb-3">
+          <label for="input3"> اسم طالب</label>
+          <input
+            type="text"
+            class="form-control"
+            id="input3"
+            [(ngModel)]="input3Value"
+            (input)="onInput3Change()"
+            placeholder="أدخل قيمة"
+          />
+        </div>
+      </div>
+
+      <!-- الحقل الرابع (تاريخ) -->
+      <div class="col-md-3">
+        <div class="form-group mb-3">
+          <label for="input4">تاريخ</label>
+          <input
+            type="date"
+            class="form-control"
+            id="input4"
+            [(ngModel)]="input4Value"
+            (input)="onInput4Change()"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="No_data_search"
+    class="alert alert-warning alert-dismissible fade show text-center"
+  >
+    {{ No_data_search }}
+  </div>
+  <div class="row mt-5" *ngIf="!isLoading">
+    <div class="col-md-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>المجموعة</th>
+            <th>اسم المدرس</th>
+            <th>اسم المادة</th>
+            <th>اسم الطالب</th>
+            <th>التاريخ</th>
+            <th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let sess of filteredSessions
+                | paginate : { itemsPerPage: 9, currentPage: p }
+            "
+            [ngClass]="{ 'table-danger': sess.attendance === 'غائب' }"
+          >
+            <td>{{ sess.className }}</td>
+            <td>{{ sess.teachername }}</td>
+            <td>{{ sess.session_name }}</td>
+            <td>{{ sess.studentname }}</td>
+            <td>{{ sess.date }}</td>
+            <td>{{ sess.attendance }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
